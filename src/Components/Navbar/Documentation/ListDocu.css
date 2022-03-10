@@ -1,0 +1,59 @@
+.textField {
+    height: 32px;
+    width: 200px;
+    border: 1px solid #e5e5e5;
+    padding: 0 32px 0 16px;
+}
+.textField:hover {
+    cursor: pointer;
+}
+
+.btnBuscar {
+    height: 34px;
+    width: 32px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.barraBusqueda {
+    float: left;
+    padding: 20px;
+}
+
+.title-filter {
+    margin-bottom: 0px;
+    margin-left: 15px;
+    font-size: 9pt;
+    font-weight: 600;
+}
+
+.margin-top {
+    margin-top: 40px;
+}
+
+.uploadButton {
+    margin-top: 20px;
+    color: rgba(0, 0, 0, 0.90) !important;
+    background: transparent !important;
+    border-radius: 10px !important;
+    border-color: rgba(0, 0, 0, 0.55) !important;
+    border: 1px solid !important;
+}
+
+.hCBnvI{
+    background-color: rgba(0, 0, 0, 0.40) !important;
+    color: white;
+}
+
+.hLGqlg{
+    border: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+.fvAeSn{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+.bsgpsK div:first-child{
+    font-weight: 600;
+}
