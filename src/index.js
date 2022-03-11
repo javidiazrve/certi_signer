@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Documentation from './Pages/Documentation';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App';
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
-  <Documentation />,
+  <App />,
   document.getElementById('root')
 );
 

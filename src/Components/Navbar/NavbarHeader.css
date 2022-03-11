@@ -6,5 +6,9 @@
 }
 .navTitle{
     color: #212529 !important;
-    /*font-weight: 600;*/
+    font-weight: 600;
+}
+.nav-css{
+    position: relative;
+    margin-top: 0%;
 }
