@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo/LogoCerti.png";
-import user from "../assets/user.jpg";
 
 import MenuItem from "./MenuItem";
 
 const menuItems = [
   {
-    name: "Documentación", to: '/document', iconClassName: 'bi bi-speedometer2'
+    name: "Documentación", exact: true, to: '/ListDocu', iconClassName: 'bi bi-speedometer2'
   },
   {
-    name: "Actividad", to: '/document', iconClassName: 'bi bi-speedometer2'
+    name: "Actividad", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },
   {
-    name: "Facturación", to: '/document', iconClassName: 'bi bi-speedometer2'
+    name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },
   {
-    name: "Usuarios", to: '/document', iconClassName: 'bi bi-speedometer2'
+    name: "Usuarios", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   }
 ]
 
@@ -51,6 +50,7 @@ const SideMenu = (props) => {
               <MenuItem
                 key={index}
                 name={menuItem.name}
+                exact={menuItem.exact}
                 to={menuItem.to}
                 iconClassName={menuItem.iconClassName}
                 onClick={() => {
