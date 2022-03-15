@@ -8,7 +8,7 @@ const menuItems = [
     name: "Documentación", exact: true, to: '/documentacion', iconClassName: 'bi bi-speedometer2'
   },
   {
-    name: "Actividad", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
+    name: "Actividad", exact: true, to: '/actividad', iconClassName: 'bi bi-speedometer2'
   },
   {
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'

@@ -1,6 +1,8 @@
 import "./App.css";
 import SideMenu from "./components/SideMenu";
 import ListDocu from "./Pages/Documentation/ListDocu";
+import Actividad from "./Pages/Actividad/Actividad";
+
 
 import {
   BrowserRouter as Router,
@@ -23,7 +25,7 @@ function App() {
       <div className={`container ${inactive ? "inactive" : ""}`}>
         <Routes>
           <Route exact path={"/documentacion"} activeClassName="active" element={<ListDocu />} />
-          <Route exact path={"/ListDocu"} activeClassName="active" element={<ListDocu />} />
+          <Route exact path={"/actividad"} activeClassName="active" element={<Actividad />} />
         </Routes>
       </div>
 

@@ -113,6 +113,8 @@
 /* table */
 .ant-table {
     width: 100% !important;
+    max-height: 400px;
+    overflow: auto;
 }
 
 /* row data */
@@ -143,12 +145,14 @@
     padding-left: 20px !important;
     color: #102973 !important;
     font-weight: 600 !important;
+    cursor: pointer;
 }
 .ant-pagination-next::before{
     content: "Next" !important;
     padding-right: 20px !important;
     color: #102973 !important;
     font-weight: 600 !important;
+    cursor: pointer;
 }
 .ant-pagination-item-link{
     border:0px !important;

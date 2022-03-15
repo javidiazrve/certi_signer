@@ -1,5 +1,4 @@
 import React, { Component, useState } from 'react';
-//import DataTable from 'react-data-table-component';
 import { Table, Tag, Input } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -792,12 +791,12 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicExpediente">
+                                                <Form.Group style={{marginBottom: "8px !important;"}} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
                                                 {
                                                     this.state.etiqueta.map(valor => (
-                                                        <span key={valor.id}>{valor.text}</span>
+                                                        <span className="tag-span" key={valor.id}>{valor.text}</span>
                                                     ))
                                                 }
                                             </Col>
@@ -921,7 +920,7 @@ class ListDocu extends Component {
                                                 </Col>
                                                 <Col lg="3">
                                                     <img className="info-css"  style={{ margin: "0 auto", display: "flex" }}  src={qr} alt="qr" />
-                                                    <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" style={{ margin: "0 auto", display: "flex" }} type="button"><img className="nav-icon" src={share} alt="share" />Compartir</button>
+                                                    <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" style={{ margin: "0 auto", display: "flex" }} type="button"><img className="share-icon" src={share} alt="share" />Compartir</button>
                                                 </Col>
                                             </Row>
                                         </div>
