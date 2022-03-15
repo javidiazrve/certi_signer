@@ -22,7 +22,7 @@ function App() {
       }} />
       <div className={`container ${inactive ? "inactive" : ""}`}>
         <Routes>
-          <Route exact path={"/ListDocu"} activeClassName="active" element={<ListDocu />} />
+          <Route exact path={"/documentacion"} activeClassName="active" element={<ListDocu />} />
           <Route exact path={"/ListDocu"} activeClassName="active" element={<ListDocu />} />
         </Routes>
       </div>

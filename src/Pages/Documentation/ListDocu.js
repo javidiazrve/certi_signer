@@ -1,21 +1,133 @@
 import React, { Component, useState } from 'react';
-import DataTable from 'react-data-table-component';
+//import DataTable from 'react-data-table-component';
+import { Table, Tag, Input } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import '../../components/Navbar/NavbarHeader.css';
-import user from "../../assets/user.jpg";
+import user from "../../assets/user.png";
+import closedicon from "../../assets/boton-x.png";
 import './Modal.css'
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 
 
 // Css
 import "./ListDocu.css"
 
-const tablaDocuments = [
-    { categoria: "Certificación Calidad ISO 9000", tipo: "Certificado diplomado", expediente: "PRT69786", cuenta: "Grupo Aliseda SA", etiqueta: "ISO9000, EF2021", documento: "certificado emitido", fecha: "22/01/2022", visto: "15" },
-    { categoria: "Certificación Calidad ISO 9000", tipo: "Certificado ampliado", expediente: "PRT78698", cuenta: "Industrias YGUS SL", etiqueta: "ISO9000, EF2021", documento: "certificado emitido", fecha: "15/01/2022", visto: "15" },
-    { categoria: "Memoria de calidades ISO 9001", tipo: "Folleto técnico", expediente: "PRT78697", cuenta: "Solis Ingeniería SA", etiqueta: "ISO9001, EF2021", documento: "Memoria de calidades", fecha: "12/01/2022", visto: "0" },
-    { categoria: "Certificación Calidad ISO 9000", tipo: "Certificado diploma", expediente: "490 (+91)", cuenta: "Grupo Córtex SA", etiqueta: "ISO9000, EF2021", documento: "certificado emitido", fecha: "13/01/2022", visto: "112" }
+const columns = [
+    {
+        title: 'Categoría',
+        dataIndex: 'categoria',
+        key: 'categoria',
+        render: text => <a>{text}</a>,
+    },
+    {
+        title: 'Tipo',
+        dataIndex: 'tipo',
+        key: 'tipo',
+    },
+    {
+        title: 'Expediente',
+        dataIndex: 'expediente',
+        key: 'expediente',
+        render: text => <span style={{ fontWeight: "600" }} >{text}</span>,
+    },
+    {
+        title: 'Cuenta',
+        dataIndex: 'cuenta',
+        key: 'cuenta',
+    },
+    {
+        title: 'Etiqueta',
+        key: 'etiquetas',
+        dataIndex: 'etiquetas',
+        render: etiquetas => (
+            <>
+                {etiquetas.map(tag => {
+                    let color = tag;
+                    let marginRight = tag;
+                    if (tag === "ISO9000") {
+                        color = '#FF9900';
+                        marginRight = '10px'
+                    } if (tag === "ISO9001") {
+                        color = '#102973';
+                        marginRight = '10px'
+                    } if (tag === "EF2021") {
+                        color = 'black'
+                    }
+                    return (
+                        <Tag style={{ color, marginRight }} key={tag}>
+                            {tag.toUpperCase()}
+                        </Tag>
+                    );
+                })}
+            </>
+        ),
+    },
+    {
+        title: 'Documento',
+        dataIndex: 'documento',
+        key: 'documento',
+    },
+    {
+        title: 'Fecha',
+        dataIndex: 'fecha',
+        key: 'fecha',
+    },
+    {
+        title: 'Visto',
+        dataIndex: 'visto',
+        key: 'visto',
+    }
+];
+
+
+const data = [
+    {
+        key: '1',
+        categoria: "Certificación Calidad ISO 9000",
+        tipo: "Certificado diplomado",
+        expediente: "PRT69786",
+        cuenta: "Grupo Aliseda SA",
+        etiquetas: ['ISO9000', 'EF2021'],
+        documento: "certificado emitido",
+        fecha: "22/01/2022",
+        visto: "15",
+    },
+    {
+        key: '2',
+        categoria: "Certificación Calidad ISO 9000",
+        tipo: "Certificado ampliado",
+        expediente: "PRT78698",
+        cuenta: "Industrias YGUS SL",
+        etiquetas: ['ISO9000', 'EF2021'],
+        documento: "certificado emitido",
+        fecha: "15/01/2022",
+        visto: "15"
+    },
+    {
+        key: '3',
+        categoria: "Memoria de calidades ISO 9001",
+        tipo: "Folleto técnico",
+        expediente: "PRT78697",
+        cuenta: "Solis Ingeniería SA",
+        etiquetas: ['ISO9001', 'EF2021'],
+        documento: "Memoria de calidades",
+        fecha: "12/01/2022",
+        visto: "0"
+    },
+    {
+        key: '4',
+        categoria: "Certificación Calidad ISO 9000",
+        tipo: "Certificado diploma",
+        expediente: "490 (+91)",
+        cuenta: "Grupo Córtex SA",
+        etiquetas: ['ISO9000', 'EF2021'],
+        documento: "certificado emitido",
+        fecha: "13/01/2022",
+        visto: "112"
+    }
 ];
 
 const categorias = [
@@ -63,14 +175,6 @@ const cuentas = [
     },
 ]
 
-
-const paginacionOpciones = {
-    rowsPerPageText: 'Filas por Página',
-    rangeSeparatorText: 'de',
-    selectAllRowsItem: true,
-    selectAllRowsItemText: 'Todos',
-}
-
 class ListDocu extends Component {
 
 
@@ -92,7 +196,10 @@ class ListDocu extends Component {
             cliente: '',
             expediente: '',
             name: '',
-            selectedFile: null
+            selectedFile: null,
+            filterTable: null,
+            columns: columns,
+            baseData: data
         };
     }
 
@@ -189,83 +296,55 @@ class ListDocu extends Component {
         await this.setState({ name: e.target.value })
     }
 
-    asignarColumnas = () => {
-
-        const columnas = [
-            {
-                name: 'CATEGORÍA',
-                selector: 'categoria',
-                sortable: false
-            },
-            {
-                name: 'TIPO',
-                selector: 'tipo',
-                sortable: false
-            },
-            {
-                name: 'EXPEDIENTE',
-                selector: 'expediente',
-                sortable: false,
-                //grow: 3
-            },
-            {
-                name: 'CUENTA CLIENTE',
-                selector: 'cuenta',
-                sortable: false,
-            },
-            {
-                name: 'ETIQUETAS',
-                selector: 'etiqueta',
-                sortable: false,
-            },
-            {
-                name: 'DOCUMENTO',
-                selector: 'documento',
-                sortable: false,
-            },
-            {
-                name: 'FECHA',
-                selector: 'fecha',
-                sortable: true,
-            },
-            {
-                name: 'VISTO',
-                selector: 'visto',
-                sortable: false,
-            }
-        ];
-
-        this.setState({ columnas: columnas });
-    }
-
-    filtrarElementos = () => {
-        var search = tablaDocuments.filter(item => {
-            if (item.fecha.toString().includes(this.state.busqueda) ||
-                item.cuenta.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(this.state.busqueda) ||
-                item.expediente.toLowerCase().includes(this.state.busqueda)
-            ) {
-                return item;
-            }
-        });
-        this.setState({ cuentas: search });
-    }
-
-    crearIndex = () => {
-        var contador = 1;
-        tablaDocuments.map(elemento => {
-            elemento["id"] = contador;
-            contador++;
-        })
-    }
 
     componentDidMount() {
-        this.crearIndex();
-        this.asignarColumnas();
-        this.setState({ cuentas: tablaDocuments });
+        //this.crearIndex();
+        //this.asignarColumnas();
+        //this.setState({ cuentas: tablaDocuments });
     }
+
+    search = value => {
+        const { baseData } = this.state;
+        console.log("PASS", { value });
+
+        const filterTable = baseData.filter(o =>
+            Object.keys(o).some(k =>
+                String(o[k])
+                    .toLowerCase()
+                    .includes(value.toLowerCase())
+            )
+        );
+
+        this.setState({ filterTable });
+    };
+
+    onChangeDate(date, dateString) {
+        console.log(date, dateString);
+    }
+
+
+    onAddStudent = () => {
+        const randomNumber = parseInt(Math.random() * 1000);
+        const newStudent = {
+            key: randomNumber,
+            categoria: this.state.categorias,
+            tipo: this.state.type,
+            expediente: this.state.expediente,
+            cuenta: this.state.cliente,
+            etiquetas: ['ISO9001', 'EF2021'],
+            documento: this.state.name,
+            fecha: "12/01/2022",
+            visto: 0
+        };
+
+        this.setState({ baseData: [...this.state.baseData, newStudent], modal: false, });
+
+    };
 
     render() {
         const { modal, modalScreen } = this.state;
+        const { filterTable, columns, baseData } = this.state;
+
 
         return (
             <>
@@ -276,20 +355,19 @@ class ListDocu extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav" className="margin-navbar">
                             <Nav className="me-auto">
-                                <div className="input-group">
-                                    <input className="form-control border-end-0 border rounded-pill filterSearch"
-                                        name="busqueda"
-                                        placeholder="Buscador..."
-                                        type="text"
-                                        value={this.state.busqueda}
-                                        onChange={this.onChange}
-                                        id="example-search-input" />
-                                    <span className="input-group-append">
-                                        <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5" type="button">
-                                            <FontAwesomeIcon icon={faSearch} />
-                                        </button>
-                                    </span>
-                                </div>
+                                <Input.Search className=""
+                                    name="busqueda"
+                                    placeholder="Buscador..."
+                                    type="text"
+                                    enterButton
+                                    onSearch={this.search}
+                                />
+                                <span className="input-group-append">
+                                    <button
+                                        className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5555" type="button">
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </button>
+                                </span>
                             </Nav>
 
                             <Nav className="me-auto">
@@ -309,8 +387,8 @@ class ListDocu extends Component {
                                     <img className="user-css" src={user} alt="user" />
                                 </div>
                                 <div className="user-info-nav">
-                                    <p className="name-user">Rizwan Khan</p>
-                                    <p className="rol-user">rizwankhan@gmail.com</p>
+                                    <p className="name-user">Marta Dieguez</p>
+                                    <p className="rol-user">Super Admin</p>
                                 </div>
                             </div>
                         </Navbar.Collapse>
@@ -325,10 +403,11 @@ class ListDocu extends Component {
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">CATEGORÍA</p>
                                     <Form.Select className="select-css" aria-label="Default select example">
-                                        <option>Selecciona Categoría</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        {
+                                            categorias.map(valor => (
+                                                <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
+                                            ))
+                                        }
                                     </Form.Select>
                                 </div>
                             </Col>
@@ -337,10 +416,11 @@ class ListDocu extends Component {
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">TIPO</p>
                                     <Form.Select className="select-css" aria-label="Default select example">
-                                        <option>Selecciona Tipo</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        {
+                                            tipos.map(valor => (
+                                                <option key={valor.id} value={valor.tipo} >{valor.tipo}</option>
+                                            ))
+                                        }
                                     </Form.Select>
                                 </div>
                             </Col>
@@ -348,6 +428,17 @@ class ListDocu extends Component {
                             <Col lg="3">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">FECHA DE CARGA</p>
+
+                                    <Form.Group controlId="dob">
+                                        <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    </Form.Group>
+
+                                </div>
+                            </Col>
+
+                            <Col lg="2">
+                                <div className="SelectBusqueda">
+                                    <p className="title-filter">ESTADO</p>
                                     <Form.Select className="select-css" aria-label="Default select example">
                                         <option>Selecciona Fecha</option>
                                         <option value="1">One</option>
@@ -357,34 +448,11 @@ class ListDocu extends Component {
                                 </div>
                             </Col>
 
-                            <Col lg="2">
-                                <div className="SelectBusqueda">
-                                    <p className="title-filter">ESTADO</p>
-                                    <Form.Select className="select-css" aria-label="Default select example">
-                                        {
-                                            tablaDocuments.map(estado => (
-                                                <option key={estado.tipo} value={estado.tipo}>{estado.tipo}</option>
-                                            ))
-                                        }
-                                    </Form.Select>
-                                </div>
-                            </Col>
-
                         </Row>
 
-                        <DataTable
-                            columns={this.state.columnas}
-                            data={this.state.cuentas}
-                            //title=""
-                            pagination
-                            paginationComponentOptions={paginacionOpciones}
-                            fixedHeader
-                            fixedHeaderScrollHeight="600px"
-                            noDataComponent={<span>No se encontró ningún elemento</span>}
-                        />
+                        <Table columns={columns} dataSource={filterTable == null ? baseData : filterTable} />
                     </div>
                     <Button className="uploadButton" onClick={this.modalOpen}>Cargar nuevo documento</Button>
-
                     <Modal show={modal} size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered>
@@ -394,7 +462,8 @@ class ListDocu extends Component {
                                     <Modal.Title id="contained-modal-title-vcenter">
                                         Nuevo documento
                                     </Modal.Title>
-                                    <Button className="out-css" onClick={this.modalClose}>X</Button>
+                                    <Button className="out-css" onClick={this.modalClose}><img className="closed-css" src={closedicon} alt="closedicon" />
+                                    </Button>
 
                                 </Modal.Header>
 
@@ -484,8 +553,8 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="8">
-                                                <input type="file" onChange={this.onFileChange} />
-                                                <Button className="uploadButton">Seleccionar el documento a cargar</Button>
+                                                <label htmlFor="files" className="uploadButton btn">Seleccionar el documento a cargar</label>
+                                                <input id="files" style={{ visibility: "hidden" }} type="file" onChange={this.onFileChange} />
                                             </Col>
 
                                         </Row>
@@ -581,7 +650,7 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Documento a publicar:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" />
+                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
                                                 </Form.Group>
                                             </Col>
 
@@ -599,7 +668,7 @@ class ListDocu extends Component {
                                 </Modal.Body>
                                 <Modal.Footer>
                                     <Button className="out-css" onClick={this.backModal}>Volver atrás</Button>
-                                    <Button className="next-css" onClick={this.handleSubmit}>Continuar</Button>
+                                    <Button className="next-css" onClick={this.onAddStudent}>Continuar</Button>
                                 </Modal.Footer>
                             </>
                         )}

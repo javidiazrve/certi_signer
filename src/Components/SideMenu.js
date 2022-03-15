@@ -5,7 +5,7 @@ import MenuItem from "./MenuItem";
 
 const menuItems = [
   {
-    name: "Documentación", exact: true, to: '/ListDocu', iconClassName: 'bi bi-speedometer2'
+    name: "Documentación", exact: true, to: '/documentacion', iconClassName: 'bi bi-speedometer2'
   },
   {
     name: "Actividad", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
@@ -36,9 +36,9 @@ const SideMenu = (props) => {
         }}
           className="toggle-menu-btn">
           {inactive ? (
-            <i className="bi bi-arrow-right-square-fill"></i>
+            <i className="bi bi-filter-left"></i>
           ) : (
-            <i className="bi bi-arrow-left-square-fill"></i>
+            <i className="bi bi-filter-left"></i>
           )}
         </div>
       </div>
