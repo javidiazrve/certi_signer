@@ -97,7 +97,7 @@
     background: #f4f4f4;
     border-radius: 54px;
     color: #9f9f9f;
-    width: 114px;
+    width: auto;
     font-size: 16px;
     border: transparent;
     font-weight: 600;
@@ -107,7 +107,7 @@
     background: #f4f4f4;
     border-radius: 54px;
     color: #9f9f9f;
-    width: 114px;
+    width: auto;
     font-size: 16px;
     border: transparent;
     font-weight: 600;
@@ -141,7 +141,8 @@
     border: 1px solid #c2c2c2;
     box-sizing: border-box;
     border-radius: 20px;
-    padding: 40px;
+    padding: 15px;
+    margin-top: 40px;
 }
 
 .info-text{
@@ -151,4 +152,29 @@
     font-size: 16px;
     line-height: 24px;
     color: rgba(12, 12, 12, 0.7);
+    margin-bottom: 0px;
+}
+.tag-wrapper{
+    padding: 3px;
+    border: 1px solid #102973 !important;
+    border-radius: 5px;
+    cursor:pointer;
+    margin-left: 5px;
+}
+.ReactTags__remove{
+    margin-left: 10px;
+    border: 0px;
+    background: transparent;
+}
+
+.ReactTags__tagInput{
+    margin-top: 5px;
+}
+
+.flex{
+    display: flex;
+}
+
+.info-css{
+    margin: 0 auto;
 }

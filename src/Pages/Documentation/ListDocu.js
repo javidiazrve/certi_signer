@@ -8,6 +8,7 @@ import '../../components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
 import chat from "../../assets/chat.svg";
 import bell from "../../assets/bell.svg";
+import info from "../../assets/info.svg";
 import closedicon from "../../assets/boton-x.png";
 import './Modal.css'
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -360,13 +361,43 @@ class ListDocu extends Component {
             visto: 0
         };
 
-        this.setState({ baseData: [...this.state.baseData, newStudent], modal: false, });
+        this.setState({
+            baseData: [...this.state.baseData, newStudent], busqueda: '',
+            cuentas: [],
+            columnas: [],
+            modal: false,
+            modalScreen: 0,
+            showCategory: false,
+            password: false,
+            newCategory: '',
+            categorias: '',
+            categoriasArr: [
+                {
+                    categoria: "Certificación Calidad ISO 9000", id: 1
+                },
+                {
+                    categoria: "Memoria de calidades ISO 9001", id: 2
+                },
+            ],
+            type: '',
+            visibilidad: '',
+            //etiqueta: '',
+            cliente: '',
+            expediente: '',
+            name: '',
+            selectedFile: null,
+            filterTable: null,
+            columns: columns,
+            etiqueta: []
+        });
 
     };
 
 
     handleDelete = i => {
+        console.log("test");
         // setTags(tags.filter((tag, index) => index !== i));
+        this.setState(this.state.etiqueta.filter((tag, index) => index !== i))
     };
 
     handleAddition = tag => {
@@ -413,7 +444,7 @@ class ListDocu extends Component {
         return (
             <>
 
-                <Container className="margin-top">
+                <Container>
                     <Navbar className="nav-css" collapseOnSelect expand="lg" bg="light" variant="light">
                         <h4 className="navTitle">Documentación</h4>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -761,7 +792,14 @@ class ListDocu extends Component {
                                             </Col>
                                         </Row>
                                         <div className="info-box">
-                                            <p className="info-text">Se va a publicar el documento en una red pública de tipo Blockchain. Por favor, revise antes que toda la información es correcta.</p>
+                                            <Row>
+                                                <Col lg="3" className="flex">
+                                                    <img  className="info-css" src={info} alt="info" />
+                                                </Col>
+                                                <Col lg="9">
+                                                    <p className="info-text">Se va a publicar el documento en una red pública de tipo Blockchain. Por favor, revise antes que toda la información es correcta.</p>
+                                                </Col>
+                                            </Row>
                                         </div>
                                     </Form>
                                 </Modal.Body>
