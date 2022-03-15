@@ -9,7 +9,10 @@ import user from "../../assets/user.png";
 import chat from "../../assets/chat.svg";
 import bell from "../../assets/bell.svg";
 import info from "../../assets/info.svg";
+import cloud from "../../assets/cloudcheck.svg";
 import closedicon from "../../assets/boton-x.png";
+import share from "../../assets/share.png";
+import qr from "../../assets/qr.svg";
 import './Modal.css'
 import { WithContext as ReactTags } from 'react-tag-input';
 
@@ -272,6 +275,14 @@ class ListDocu extends Component {
         this.setState(
             {
                 modalScreen: 1,
+            }
+        );
+    };
+
+    handleSubmitStep2 = () => {
+        this.setState(
+            {
+                modalScreen: 2,
             }
         );
     };
@@ -794,7 +805,7 @@ class ListDocu extends Component {
                                         <div className="info-box">
                                             <Row>
                                                 <Col lg="3" className="flex">
-                                                    <img  className="info-css" src={info} alt="info" />
+                                                    <img className="info-css" src={info} alt="info" />
                                                 </Col>
                                                 <Col lg="9">
                                                     <p className="info-text">Se va a publicar el documento en una red pública de tipo Blockchain. Por favor, revise antes que toda la información es correcta.</p>
@@ -805,7 +816,119 @@ class ListDocu extends Component {
                                 </Modal.Body>
                                 <Modal.Footer>
                                     <Button className="out-csz" onClick={this.backModal}>Volver atrás</Button>
-                                    <Button className="next-css" onClick={this.onAddStudent}>Continuar</Button>
+                                    <Button className="next-css" onClick={this.handleSubmitStep2}>Continuar</Button>
+                                </Modal.Footer>
+                            </>
+                        )}
+
+                        {modalScreen === 2 && (
+                            <>
+                                <Modal.Header>
+                                    <Modal.Title id="contained-modal-title-vcenter">
+                                        Nuevo documento
+                                    </Modal.Title>
+                                    <Button className="out-css" onClick={this.modalClose}>X</Button>
+
+                                </Modal.Header>
+
+                                <Modal.Body>
+                                    <Form>
+
+                                        <p className="modal-title">INFORMACIÓN REGISTRADA</p>
+                                        <Row className="row-select">
+                                            <Col lg="4">
+                                                <div className="SelectBusqueda">
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Categoría</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.categorias} placeholder="" disabled />
+                                                    </Form.Group>
+                                                    <a className="redColor">Cambiar</a>
+                                                </div>
+                                            </Col>
+
+                                            <Col lg="4">
+                                                <div className="SelectBusqueda">
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Tipo</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.type} placeholder="" disabled />
+                                                    </Form.Group>
+                                                    <a className="redColor">Cambiar</a>
+                                                </div>
+                                            </Col>
+
+                                            <Col lg="4">
+                                                <div className="SelectBusqueda">
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Visibilidad</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.visibilidad} placeholder="" disabled />
+                                                    </Form.Group>
+                                                </div>
+                                            </Col>
+
+                                        </Row>
+                                        <Row className="row-select">
+                                            <Col lg="4">
+                                                <Form.Group className="mb-3" controlId="formBasicName">
+                                                    <Form.Label className="title-filter-modal">Nombre o Descripción:</Form.Label>
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.name} disabled />
+                                                </Form.Group>
+                                            </Col>
+
+                                            <Col lg="4">
+                                                <Form.Group className="mb-3" controlId="formBasicExpediente">
+                                                    <Form.Label className="title-filter-modal">Expediente:</Form.Label>
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.expediente} disabled />
+                                                </Form.Group>
+                                            </Col>
+
+                                            <Col lg="4">
+                                                <Form.Group className="mb-3" controlId="formBasicCuenta">
+                                                    <Form.Label className="title-filter-modal">Cuenta cliente:</Form.Label>
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.cliente} disabled />
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+
+                                        <Row className="row-select">
+                                            <Col lg="4">
+                                                <Form.Group className="mb-3" controlId="formBasicName">
+                                                    <Form.Label className="title-filter-modal">Documento a publicar:</Form.Label>
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
+                                                </Form.Group>
+                                            </Col>
+
+                                            <Col lg="4">
+                                                <Form.Group className="mb-3" controlId="formBasicExpediente">
+                                                    <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
+                                                </Form.Group>
+                                                {
+                                                    this.state.etiqueta.map(valor => (
+                                                        <span key={valor.id}>{valor.text}</span>
+                                                    ))
+                                                }
+                                            </Col>
+                                        </Row>
+                                        <div className="info-box">
+                                            <Row>
+                                                <Col lg="2" className="flex">
+                                                    <img className="cloud-css" src={cloud} alt="cloud" />
+                                                </Col>
+                                                <Col lg="7" style={{alignSelf: "center"}}>
+                                                    <p className="info-text-yellow">Publicación realizada con éxito</p>
+                                                    <p className="info-text">Inscrita en la red ETHEREUM</p>
+                                                    <p className="info-text">Publicado por: Julian Gomez, el 12/01/2022 a las 14:34</p>
+                                                    <p className="info-text">Hash: 678lkj6786lkllj67b86kj7h87k6jh7kj8h767</p>
+                                                </Col>
+                                                <Col lg="3">
+                                                    <img className="info-css"  style={{ margin: "0 auto", display: "flex" }}  src={qr} alt="qr" />
+                                                    <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" style={{ margin: "0 auto", display: "flex" }} type="button"><img className="nav-icon" src={share} alt="share" />Compartir</button>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </Form>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button className="next-css" onClick={this.onAddStudent}>Aceptar</Button>
                                 </Modal.Footer>
                             </>
                         )}
