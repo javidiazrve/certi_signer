@@ -13,3 +13,14 @@
     margin-top: 0%;
     margin-left: 30pt;
 }
+
+.nav-icon{
+    width: 20.66px;
+}
+.nav-button{
+    border:0px !important;
+}
+.nav-button:hover{
+    background: transparent;
+    border: 0px;
+}

@@ -6,9 +6,12 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import '../../components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
+import chat from "../../assets/chat.svg";
+import bell from "../../assets/bell.svg";
 import closedicon from "../../assets/boton-x.png";
 import './Modal.css'
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { WithContext as ReactTags } from 'react-tag-input';
+
 
 
 
@@ -130,7 +133,7 @@ const data = [
     }
 ];
 
-const categorias = [
+const categoriasArr = [
     {
         categoria: "Certificación Calidad ISO 9000", id: 1
     },
@@ -188,18 +191,29 @@ class ListDocu extends Component {
             columnas: [],
             modal: false,
             modalScreen: 0,
+            showCategory: false,
             password: false,
+            newCategory: '',
             categorias: '',
+            categoriasArr: [
+                {
+                    categoria: "Certificación Calidad ISO 9000", id: 1
+                },
+                {
+                    categoria: "Memoria de calidades ISO 9001", id: 2
+                },
+            ],
             type: '',
             visibilidad: '',
-            etiqueta: '',
+            //etiqueta: '',
             cliente: '',
             expediente: '',
             name: '',
             selectedFile: null,
             filterTable: null,
             columns: columns,
-            baseData: data
+            baseData: data,
+            etiqueta: []
         };
     }
 
@@ -230,6 +244,9 @@ class ListDocu extends Component {
     modalOpen = () => {
         this.setState({ modal: true });
     };
+    modalCategory = () => {
+        this.setState({ showCategory: true })
+    }
 
     backModal = () => {
         this.setState({
@@ -243,6 +260,12 @@ class ListDocu extends Component {
             modalScreen: 0
         });
     };
+
+    modalClosedCategory = () => {
+        this.setState({
+            showCategory: false
+        })
+    }
 
     handleSubmit = () => {
         this.setState(
@@ -341,8 +364,49 @@ class ListDocu extends Component {
 
     };
 
+
+    handleDelete = i => {
+        // setTags(tags.filter((tag, index) => index !== i));
+    };
+
+    handleAddition = tag => {
+        //setTags([...tags, tag]);
+        this.setState({ etiqueta: [...this.state.etiqueta, tag] })
+        console.log("Etiquetas", this.state.etiqueta);
+    };
+
+    handleDrag = (tag, currPos, newPos) => {
+        //const newTags = tags.slice();
+
+        //newTags.splice(currPos, 1);
+        //newTags.splice(newPos, 0, tag);
+
+        // re-render
+        //setTags(newTags);
+    };
+
+    handleTagClick = index => {
+        console.log('The tag at index ' + index + ' was clicked');
+    };
+
+    addNewcategory = async (e) => {
+
+        this.setState({ newCategory: e.target.value });
+
+    }
+
+    addNewcategory2 = async () => {
+        const newCategoryArr = {
+            categoria: this.state.newCategory, id: 3
+        }
+        await this.setState({ categoriasArr: [newCategoryArr, ...this.state.categoriasArr], showCategory: false, })
+        console.log("Es nuevo?", this.state.categoriasArr)
+    }
+
+
+
     render() {
-        const { modal, modalScreen } = this.state;
+        const { modal, modalScreen, showCategory } = this.state;
         const { filterTable, columns, baseData } = this.state;
 
 
@@ -371,14 +435,14 @@ class ListDocu extends Component {
                             </Nav>
 
                             <Nav className="me-auto">
-                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5" type="button">
-                                    <FontAwesomeIcon icon={faSearch} />
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                    <img className="nav-icon" src={chat} alt="chat" />
                                 </button>
                             </Nav>
 
                             <Nav className="me-auto">
-                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5" type="button">
-                                    <FontAwesomeIcon icon={faSearch} />
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                    <img className="nav-icon" src={bell} alt="bell" />
                                 </button>
                             </Nav>
 
@@ -404,7 +468,7 @@ class ListDocu extends Component {
                                     <p className="title-filter">CATEGORÍA</p>
                                     <Form.Select className="select-css" aria-label="Default select example">
                                         {
-                                            categorias.map(valor => (
+                                            this.state.categoriasArr.map(valor => (
                                                 <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
                                             ))
                                         }
@@ -462,7 +526,7 @@ class ListDocu extends Component {
                                     <Modal.Title id="contained-modal-title-vcenter">
                                         Nuevo documento
                                     </Modal.Title>
-                                    <Button className="out-css" onClick={this.modalClose}><img className="closed-css" src={closedicon} alt="closedicon" />
+                                    <Button className="out-css-header" onClick={this.modalClose}><img className="closed-css" src={closedicon} alt="closedicon" />
                                     </Button>
 
                                 </Modal.Header>
@@ -477,15 +541,36 @@ class ListDocu extends Component {
                                                     <p className="title-filter-modal">Categoría</p>
                                                     <Form.Select onClick={this.handleCategory} className="select-css-modal" aria-label="Default select example">
                                                         {
-                                                            categorias.map(valor => (
+                                                            this.state.categoriasArr.map(valor => (
                                                                 <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
                                                             ))
                                                         }
                                                     </Form.Select>
-                                                    <a className="redColor">Añadir nueva categoría</a>
+                                                    <Button className="redColorModal1" onClick={this.modalCategory}>Añadir nueva categoría</Button>
                                                 </div>
                                             </Col>
-
+                                            <Modal show={showCategory} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Agregar nueva Categoría</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedCategory}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Nombre de la categoría</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.newCategory} onChange={this.addNewcategory} />
+                                                    </Form.Group>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedCategory}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.addNewcategory2}>
+                                                        Agregar Categoría
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
                                             <Col lg="4">
                                                 <div className="SelectBusqueda">
                                                     <p className="title-filter-modal">Tipo</p>
@@ -496,7 +581,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
-                                                    <a className="redColor">Añadir nuevo tipo</a>
+                                                    <Button className="redColorModal1">Añadir nuevo tipo</Button>
                                                 </div>
                                             </Col>
 
@@ -518,14 +603,14 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Nombre Descripción</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" onChange={this.handleNombre} />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" onChange={this.handleNombre} />
                                                 </Form.Group>
                                             </Col>
 
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Expediente Asociado</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" onChange={this.handleExpediente} />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" onChange={this.handleExpediente} />
                                                 </Form.Group>
                                             </Col>
 
@@ -539,7 +624,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
-                                                    <a className="redColor">Añadir nueva cuenta cliente</a>
+                                                    <a className="redColorModal1">Añadir nueva cuenta cliente</a>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -548,8 +633,18 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicEtiquetas">
                                                     <Form.Label className="title-filter-modal">Etiquetas</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" onChange={this.handleEtiquetas} />
+                                                    <ReactTags
+                                                        classNames="newCategory-css"
+                                                        tags={this.state.etiqueta}
+                                                        handleDelete={this.handleDelete}
+                                                        handleAddition={this.handleAddition}
+                                                        handleDrag={this.handleDrag}
+                                                        handleTagClick={this.handleTagClick}
+                                                        inputFieldPosition="bottom"
+                                                        autocomplete
+                                                    />
                                                 </Form.Group>
+
                                             </Col>
 
                                             <Col lg="8">
@@ -573,7 +668,7 @@ class ListDocu extends Component {
                                     </Form>
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <Button className="out-css" onClick={this.modalClose}>Salir</Button>
+                                    <Button className="out-csz" onClick={this.modalClose}>Salir</Button>
                                     <Button className="next-css" onClick={this.handleSubmit}>Siguiente Paso</Button>
                                 </Modal.Footer>
                             </>
@@ -597,7 +692,7 @@ class ListDocu extends Component {
                                                 <div className="SelectBusqueda">
                                                     <Form.Group className="mb-3" controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Categoría</Form.Label>
-                                                        <Form.Control className="input-Form" type="text" value={this.state.categorias} placeholder="" disabled />
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.categorias} placeholder="" disabled />
                                                     </Form.Group>
                                                     <a className="redColor">Cambiar</a>
                                                 </div>
@@ -607,7 +702,7 @@ class ListDocu extends Component {
                                                 <div className="SelectBusqueda">
                                                     <Form.Group className="mb-3" controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Tipo</Form.Label>
-                                                        <Form.Control className="input-Form" type="text" value={this.state.type} placeholder="" disabled />
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.type} placeholder="" disabled />
                                                     </Form.Group>
                                                     <a className="redColor">Cambiar</a>
                                                 </div>
@@ -617,7 +712,7 @@ class ListDocu extends Component {
                                                 <div className="SelectBusqueda">
                                                     <Form.Group className="mb-3" controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Visibilidad</Form.Label>
-                                                        <Form.Control className="input-Form" type="text" value={this.state.visibilidad} placeholder="" disabled />
+                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.visibilidad} placeholder="" disabled />
                                                     </Form.Group>
                                                 </div>
                                             </Col>
@@ -627,21 +722,21 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Nombre o Descripción:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.name} disabled />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.name} disabled />
                                                 </Form.Group>
                                             </Col>
 
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Expediente:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.expediente} disabled />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.expediente} disabled />
                                                 </Form.Group>
                                             </Col>
 
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicCuenta">
                                                     <Form.Label className="title-filter-modal">Cuenta cliente:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.cliente} disabled />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.cliente} disabled />
                                                 </Form.Group>
                                             </Col>
                                         </Row>
@@ -650,15 +745,19 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Documento a publicar:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
                                                 </Form.Group>
                                             </Col>
 
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
-                                                    <Form.Control className="input-Form" type="text" placeholder="" value={this.state.etiqueta} disabled />
                                                 </Form.Group>
+                                                {
+                                                    this.state.etiqueta.map(valor => (
+                                                        <span key={valor.id}>{valor.text}</span>
+                                                    ))
+                                                }
                                             </Col>
                                         </Row>
                                         <div className="info-box">
@@ -667,7 +766,7 @@ class ListDocu extends Component {
                                     </Form>
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <Button className="out-css" onClick={this.backModal}>Volver atrás</Button>
+                                    <Button className="out-csz" onClick={this.backModal}>Volver atrás</Button>
                                     <Button className="next-css" onClick={this.onAddStudent}>Continuar</Button>
                                 </Modal.Footer>
                             </>
