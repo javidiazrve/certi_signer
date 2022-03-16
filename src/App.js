@@ -1,5 +1,5 @@
 import "./App.css";
-import SideMenu from "./components/SideMenu";
+import SideMenu from "./Components/SideMenu";
 import ListDocu from "./Pages/Documentation/ListDocu";
 import Actividad from "./Pages/Actividad/Actividad";
 import Usuario from "./Pages/Usuarios/Usuario";
