@@ -268,6 +268,7 @@ class ListDocu extends Component {
             newType: '',
             newCuenta: '',
             categorias: '',
+            visibilidades: '',
             categoriasModal: [
                 {
                     categoria: "Certificación Calidad ISO 9000", id: 1
@@ -491,8 +492,11 @@ class ListDocu extends Component {
             etiquetas: ['ISO9001', 'EF2021'],
             documento: this.state.name,
             fecha: "12/01/2022",
+            visibilidad: this.state.visibilidad,
             visto: 0
         };
+
+        console.log("nuevoArchivo", newStudent);
 
         this.setState({
             baseData: [...this.state.baseData, newStudent], busqueda: '',
@@ -1045,7 +1049,7 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group style={{ marginBottom: "8px !important;" }} controlId="formBasicExpediente">
+                                                <Form.Group style={{ marginBottom: "8px !important" }} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
                                                 {

@@ -11,11 +11,11 @@ const menuItems = [
   {
     name: "Actividad", exact: true, to: '/actividad', iconClassName: 'bi bi-speedometer2'
   },
-  {
+  /*{
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
-  },
+  },*/
   {
-    name: "Usuarios", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
+    name: "Usuarios", exact: true, to: '/usuario', iconClassName: 'bi bi-speedometer2'
   }
 ]
 

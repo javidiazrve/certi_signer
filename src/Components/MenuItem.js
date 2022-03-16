@@ -18,7 +18,7 @@ return (
       exact
       to={to}
       className={`menu-item`}
-      activeClassName="active"
+      activeclassname="active"
     >
       <div className="menu-icon">
         <i className={iconClassName}></i>

@@ -2,6 +2,7 @@ import "./App.css";
 import SideMenu from "./components/SideMenu";
 import ListDocu from "./Pages/Documentation/ListDocu";
 import Actividad from "./Pages/Actividad/Actividad";
+import Usuario from "./Pages/Usuarios/Usuario";
 
 
 import {
@@ -24,9 +25,10 @@ function App() {
       }} />
       <div className={`containerTwo ${inactive ? "inactive" : ""}`}>
         <Routes>
-          <Route exact path={"/"} activeClassName="active" element={<ListDocu />} />
-          <Route exact path={"/documentacion"} activeClassName="active" element={<ListDocu />} />
-          <Route exact path={"/actividad"} activeClassName="active" element={<Actividad />} />
+          <Route exact path={"/"} activeclassname="active" element={<ListDocu />} />
+          <Route exact path={"/documentacion"} activeclassname="active" element={<ListDocu />} />
+          <Route exact path={"/actividad"} activeclassname="active" element={<Actividad />} />
+          <Route exact path={"/usuario"} activeclassname="active" element={<Usuario />} />
         </Routes>
       </div>
 
