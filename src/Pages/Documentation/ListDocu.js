@@ -5,9 +5,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import '../../components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
-import chat from "../../assets/chat.svg";
+import chat from "../../assets/notification.svg";
 import bell from "../../assets/bell.svg";
 import info from "../../assets/info.svg";
+import pdf from "../../assets/pdf.svg";
+import lock from "../../assets/lock.svg";
+
+import unlock from "../../assets/unlock.svg";
+
 import cloud from "../../assets/cloudcheck.svg";
 import closedicon from "../../assets/boton-x.png";
 import share from "../../assets/share.png";
@@ -74,7 +79,17 @@ const columns = [
     {
         title: 'Documento',
         dataIndex: 'documento',
-        key: 'documento',
+        key: 'documento'
+    },
+    {
+        title: '',
+        dataIndex: 'doctype',
+        key: 'doctype'
+    },
+    {
+        title: '',
+        dataIndex: 'acessdoc',
+        key: 'acessdoc'
     },
     {
         title: 'Fecha',
@@ -98,7 +113,10 @@ const data = [
         cuenta: "Grupo Aliseda SA",
         etiquetas: ['ISO9000', 'EF2021'],
         documento: "certificado emitido",
-        fecha: "22/01/2022",
+        doctype: <img src={pdf} alt="pdf" />,
+        acessdoc: <img src={lock} alt="lock" />,
+        estado: "Acesso privado QR con contraseña",
+        fecha: "2022-01-22",
         visto: "15",
     },
     {
@@ -109,7 +127,10 @@ const data = [
         cuenta: "Industrias YGUS SL",
         etiquetas: ['ISO9000', 'EF2021'],
         documento: "certificado emitido",
-        fecha: "15/01/2022",
+        doctype: <img src={pdf} alt="pdf" />,
+        acessdoc: <img src={unlock} alt="unlock" />,
+        estado: "Acesso público mediante QR",
+        fecha: "2022-01-15",
         visto: "15"
     },
     {
@@ -120,7 +141,10 @@ const data = [
         cuenta: "Solis Ingeniería SA",
         etiquetas: ['ISO9001', 'EF2021'],
         documento: "Memoria de calidades",
-        fecha: "12/01/2022",
+        doctype: <img src={pdf} alt="pdf" />,
+        acessdoc: <img src={lock} alt="lock" />,
+        estado: "Acesso público mediante QR",
+        fecha: "2022-01-12",
         visto: "0"
     },
     {
@@ -131,12 +155,27 @@ const data = [
         cuenta: "Grupo Córtex SA",
         etiquetas: ['ISO9000', 'EF2021'],
         documento: "certificado emitido",
-        fecha: "13/01/2022",
+        doctype: <img src={pdf} alt="pdf" />,
+        acessdoc: <img src={lock} alt="lock" />,
+        estado: "Acesso público mediante QR",
+        fecha: "2022-01-13",
         visto: "112"
     }
 ];
 
 const categoriasArr = [
+    {
+        categoria: "Mostrar todo", id: 1
+    },
+    {
+        categoria: "Certificación Calidad ISO 9000", id: 2
+    },
+    {
+        categoria: "Memoria de calidades ISO 9001", id: 3
+    },
+]
+
+const categoriasModal = [
     {
         categoria: "Certificación Calidad ISO 9000", id: 1
     },
@@ -146,6 +185,21 @@ const categoriasArr = [
 ]
 
 const tipos = [
+    {
+        tipo: "Mostrar todo", id: 1
+    },
+    {
+        tipo: "Certificado diplomado", id: 2
+    },
+    {
+        tipo: "Certificado ampliado", id: 3
+    },
+    {
+        tipo: "Folleto técnico", id: 4
+    }
+]
+
+const tiposModal = [
     {
         tipo: "Certificado diplomado", id: 1
     },
@@ -157,7 +211,21 @@ const tipos = [
     }
 ]
 
+
+
 const visibilidad = [
+    {
+        seleccion: "Mostrar todo", id: 1
+    },
+    {
+        seleccion: "Acesso público mediante QR", id: 2
+    },
+    {
+        seleccion: "Acesso privado QR con contraseña", id: 3
+    },
+]
+
+const visibilidadModal = [
     {
         seleccion: "Acesso público mediante QR", id: 1
     },
@@ -190,20 +258,55 @@ class ListDocu extends Component {
 
         this.state = {
             busqueda: '',
-            cuentas: [],
             columnas: [],
             modal: false,
             modalScreen: 0,
             showCategory: false,
+            showTipo: false,
             password: false,
             newCategory: '',
+            newType: '',
+            newCuenta: '',
             categorias: '',
-            categoriasArr: [
+            categoriasModal: [
                 {
                     categoria: "Certificación Calidad ISO 9000", id: 1
                 },
                 {
                     categoria: "Memoria de calidades ISO 9001", id: 2
+                },
+            ],
+            tiposModal: [
+                {
+                    tipo: "Certificado diplomado", id: 1
+                },
+                {
+                    tipo: "Certificado ampliado", id: 2
+                },
+                {
+                    tipo: "Folleto técnico", id: 3
+                }
+            ],
+            visibilidadModal: [
+                {
+                    seleccion: "Acesso público mediante QR", id: 1
+                },
+                {
+                    seleccion: "Acesso privado QR con contraseña", id: 2
+                },
+            ],
+            cuentas: [
+                {
+                    cuenta: "Grupo Aliseda SA", id: 1
+                },
+                {
+                    cuenta: "Industrias YGUS SL", id: 2
+                },
+                {
+                    cuenta: "Solis Ingeniería SA", id: 3
+                },
+                {
+                    cuenta: "Grupo Córtex SA", id: 4
                 },
             ],
             type: '',
@@ -251,6 +354,14 @@ class ListDocu extends Component {
         this.setState({ showCategory: true })
     }
 
+    modalType = () => {
+        this.setState({ showTipo: true })
+    }
+
+    modalCuenta = () => {
+        this.setState({ showCuenta: true})
+    }
+
     backModal = () => {
         this.setState({
             modalScreen: 0
@@ -267,6 +378,18 @@ class ListDocu extends Component {
     modalClosedCategory = () => {
         this.setState({
             showCategory: false
+        })
+    }
+
+    modalClosedType = () => {
+        this.setState({
+            showTipo: false
+        })
+    }
+
+    modalClosedCuenta = () => {
+        this.setState({
+            showCuenta: false
         })
     }
 
@@ -373,7 +496,6 @@ class ListDocu extends Component {
 
         this.setState({
             baseData: [...this.state.baseData, newStudent], busqueda: '',
-            cuentas: [],
             columnas: [],
             modal: false,
             modalScreen: 0,
@@ -431,7 +553,7 @@ class ListDocu extends Component {
     };
 
     addNewcategory = async (e) => {
-
+        console.log("Log", e.target.value)
         this.setState({ newCategory: e.target.value });
 
     }
@@ -440,14 +562,99 @@ class ListDocu extends Component {
         const newCategoryArr = {
             categoria: this.state.newCategory, id: 3
         }
-        await this.setState({ categoriasArr: [newCategoryArr, ...this.state.categoriasArr], showCategory: false, })
-        console.log("Es nuevo?", this.state.categoriasArr)
+        console.log("NewCategory", newCategoryArr);
+        await this.setState({ categoriasModal: [newCategoryArr, ...this.state.categoriasModal], showCategory: false, })
+        console.log("Es nuevo?", this.state.categoriasModal)
+    }
+
+    addNewType = async (e) => {
+
+        this.setState({ newType: e.target.value });
+
+    }
+
+    addNewType2 = async () => {
+        const newTypeArr = {
+            tipo: this.state.newType, id: 4
+        }
+        await this.setState({ tiposModal: [newTypeArr, ...this.state.tiposModal], showTipo: false, })
+        console.log("Es nuevo?", this.state.tiposModal)
+    }
+
+    addNewCuenta = async (e) => {
+
+        this.setState({ newCuenta: e.target.value });
+
+    }
+
+    addNewCuenta2 = async () => {
+        const newCuentaArr = {
+            cuenta: this.state.newCuenta, id: 5
+        }
+        await this.setState({ cuentas: [newCuentaArr, ...this.state.cuentas], showCuenta: false, })
+        console.log("Es nuevo?", this.state.cuentas)
     }
 
 
+    handleFilterCategory = (e) => {
+        const currValue = e.target.value;
+        if (currValue === "Mostrar todo") {
+            console.log("Sera que si?");
+            return this.setState({ baseData: data })
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.categoria.includes(currValue)
+            );
+            //setDataSource(filteredData);
+            this.setState({ baseData: filteredData })
+        }
+    }
+
+    handleFilterType = (e) => {
+        const currValue = e.target.value;
+        if (currValue === "Mostrar todo") {
+            console.log("Sera que si?");
+            return this.setState({ baseData: data })
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.tipo.includes(currValue)
+            );
+            //setDataSource(filteredData);
+            this.setState({ baseData: filteredData })
+        }
+    }
+
+    handleFilterVisibilidad = (e) => {
+        const currValue = e.target.value;
+        if (currValue === "Mostrar todo") {
+            console.log("Sera que si?");
+            return this.setState({ baseData: data })
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.estado.includes(currValue)
+            );
+            //setDataSource(filteredData);
+            this.setState({ baseData: filteredData })
+        }
+    }
+
+    handleFilterDate = (e) => {
+        const currValue = e.target.value;
+        console.log("Date?", currValue);
+        if (currValue === "Mostrar todo") {
+            console.log("Sera que si?");
+            return this.setState({ baseData: data })
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.fecha.includes(currValue)
+            );
+            //setDataSource(filteredData);
+            this.setState({ baseData: filteredData })
+        }
+    }
 
     render() {
-        const { modal, modalScreen, showCategory } = this.state;
+        const { modal, modalScreen, showCategory, showTipo, showCuenta } = this.state;
         const { filterTable, columns, baseData } = this.state;
 
 
@@ -477,7 +684,7 @@ class ListDocu extends Component {
 
                             <Nav className="me-auto">
                                 <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                    <img className="nav-icon" src={chat} alt="chat" />
+                                    <img src={chat} alt="chat" />
                                 </button>
                             </Nav>
 
@@ -507,9 +714,9 @@ class ListDocu extends Component {
                             <Col lg="3">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">CATEGORÍA</p>
-                                    <Form.Select className="select-css" aria-label="Default select example">
+                                    <Form.Select onClick={this.handleFilterCategory} className="select-css" aria-label="Default select example">
                                         {
-                                            this.state.categoriasArr.map(valor => (
+                                            categoriasArr.map(valor => (
                                                 <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
                                             ))
                                         }
@@ -520,7 +727,7 @@ class ListDocu extends Component {
                             <Col lg="3">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">TIPO</p>
-                                    <Form.Select className="select-css" aria-label="Default select example">
+                                    <Form.Select onClick={this.handleFilterType} className="select-css" aria-label="Default select example">
                                         {
                                             tipos.map(valor => (
                                                 <option key={valor.id} value={valor.tipo} >{valor.tipo}</option>
@@ -535,7 +742,7 @@ class ListDocu extends Component {
                                     <p className="title-filter">FECHA DE CARGA</p>
 
                                     <Form.Group controlId="dob">
-                                        <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                        <Form.Control onChange={this.handleFilterDate} className="select-css" type="date" name="dob" placeholder="Date of Birth" />
                                     </Form.Group>
 
                                 </div>
@@ -544,18 +751,19 @@ class ListDocu extends Component {
                             <Col lg="2">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">ESTADO</p>
-                                    <Form.Select className="select-css" aria-label="Default select example">
-                                        <option>Selecciona Fecha</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <Form.Select onClick={this.handleFilterVisibilidad} className="select-css" aria-label="Default select example">
+                                        {
+                                            visibilidad.map(item => (
+                                                <option key={item.id} value={item.seleccion} >{item.seleccion}</option>
+                                            ))
+                                        }
                                     </Form.Select>
                                 </div>
                             </Col>
 
                         </Row>
 
-                        <Table columns={columns} dataSource={filterTable == null ? baseData : filterTable} />
+                        <Table columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
                     </div>
                     <Button className="uploadButton" onClick={this.modalOpen}>Cargar nuevo documento</Button>
                     <Modal show={modal} size="lg"
@@ -582,7 +790,7 @@ class ListDocu extends Component {
                                                     <p className="title-filter-modal">Categoría</p>
                                                     <Form.Select onClick={this.handleCategory} className="select-css-modal" aria-label="Default select example">
                                                         {
-                                                            this.state.categoriasArr.map(valor => (
+                                                            this.state.categoriasModal.map(valor => (
                                                                 <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
                                                             ))
                                                         }
@@ -617,21 +825,43 @@ class ListDocu extends Component {
                                                     <p className="title-filter-modal">Tipo</p>
                                                     <Form.Select onClick={this.handleType} className="select-css-modal" aria-label="Default select example">
                                                         {
-                                                            tipos.map(valor => (
+                                                            this.state.tiposModal.map(valor => (
                                                                 <option key={valor.id} value={valor.tipo} >{valor.tipo}</option>
                                                             ))
                                                         }
                                                     </Form.Select>
-                                                    <Button className="redColorModal1">Añadir nuevo tipo</Button>
+                                                    <Button className="redColorModal1" onClick={this.modalType}>Añadir nuevo tipo</Button>
                                                 </div>
                                             </Col>
+                                            <Modal show={showTipo} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Agregar nuevo Tipo</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedType}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Nombre del Tipo</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.newType} onChange={this.addNewType} />
+                                                    </Form.Group>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedType}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.addNewType2}>
+                                                        Agregar Categoría
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
 
                                             <Col lg="4">
                                                 <div className="SelectBusqueda">
                                                     <p className="title-filter-modal">Visibilidad</p>
                                                     <Form.Select onClick={this.handleVisibilidad} className="select-css-modal" aria-label="Default select example">
                                                         {
-                                                            visibilidad.map(valor => (
+                                                            this.state.visibilidadModal.map(valor => (
                                                                 <option key={valor.id} value={valor.seleccion} >{valor.seleccion}</option>
                                                             ))
                                                         }
@@ -660,14 +890,38 @@ class ListDocu extends Component {
                                                     <p className="title-filter-modal">Cuenta Cliente Vinculado</p>
                                                     <Form.Select onClick={this.handleCliente} className="select-css-modal" aria-label="Default select example">
                                                         {
-                                                            cuentas.map(estado => (
+                                                            this.state.cuentas.map(estado => (
                                                                 <option key={estado.id} value={estado.cuenta}>{estado.cuenta}</option>
                                                             ))
                                                         }
                                                     </Form.Select>
-                                                    <a className="redColorModal1">Añadir nueva cuenta cliente</a>
+                                                    <Button className="redColorModal1" onClick={this.modalCuenta}>Añadir nueva cuenta cliente</Button>
                                                 </div>
                                             </Col>
+
+                                            <Modal show={showCuenta} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Agregar nueva Cuenta</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedCuenta}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Nombre de la cuenta</Form.Label>
+                                                        <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.newCuenta} onChange={this.addNewCuenta} />
+                                                    </Form.Group>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedCuenta}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.addNewCuenta2}>
+                                                        Agregar Categoría
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
+
                                         </Row>
 
                                         <Row className="row-select">
@@ -675,7 +929,7 @@ class ListDocu extends Component {
                                                 <Form.Group className="mb-3" controlId="formBasicEtiquetas">
                                                     <Form.Label className="title-filter-modal">Etiquetas</Form.Label>
                                                     <ReactTags
-                                                        classNames="newCategory-css"
+                                                        className="newCategory-css"
                                                         tags={this.state.etiqueta}
                                                         handleDelete={this.handleDelete}
                                                         handleAddition={this.handleAddition}
@@ -791,7 +1045,7 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group style={{marginBottom: "8px !important;"}} controlId="formBasicExpediente">
+                                                <Form.Group style={{ marginBottom: "8px !important;" }} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
                                                 {
@@ -912,14 +1166,14 @@ class ListDocu extends Component {
                                                 <Col lg="2" className="flex">
                                                     <img className="cloud-css" src={cloud} alt="cloud" />
                                                 </Col>
-                                                <Col lg="7" style={{alignSelf: "center"}}>
+                                                <Col lg="7" style={{ alignSelf: "center" }}>
                                                     <p className="info-text-yellow">Publicación realizada con éxito</p>
                                                     <p className="info-text">Inscrita en la red ETHEREUM</p>
                                                     <p className="info-text">Publicado por: Julian Gomez, el 12/01/2022 a las 14:34</p>
                                                     <p className="info-text">Hash: 678lkj6786lkllj67b86kj7h87k6jh7kj8h767</p>
                                                 </Col>
                                                 <Col lg="3">
-                                                    <img className="info-css"  style={{ margin: "0 auto", display: "flex" }}  src={qr} alt="qr" />
+                                                    <img className="info-css" style={{ margin: "0 auto", display: "flex" }} src={qr} alt="qr" />
                                                     <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" style={{ margin: "0 auto", display: "flex" }} type="button"><img className="share-icon" src={share} alt="share" />Compartir</button>
                                                 </Col>
                                             </Row>

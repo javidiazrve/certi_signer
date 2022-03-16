@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo/LogoCerti.png";
+import menuIcon from "../assets/ic_menu.svg";
 
 import MenuItem from "./MenuItem";
 
@@ -36,9 +37,9 @@ const SideMenu = (props) => {
         }}
           className="toggle-menu-btn">
           {inactive ? (
-            <i className="bi bi-filter-left"></i>
+            <img className="menu-icon-css" src={menuIcon} alt="menuIcon" />
           ) : (
-            <i className="bi bi-filter-left"></i>
+            <img className="menu-icon-css" src={menuIcon} alt="menuIcon" />
           )}
         </div>
       </div>

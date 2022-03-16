@@ -35,6 +35,7 @@
 .redColorModal1 {
     color: #ff0000;
     cursor: pointer;
+    margin-top: 5px;
     text-decoration: none;
     font-size: 9pt;
     font-weight: 700;

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Table, Input } from 'antd';
-import { Container, Row, Col, Form, Navbar, Nav, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Form, Navbar, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
-import chat from "../../assets/chat.svg";
+import chat from "../../assets/notification.svg";
 import bell from "../../assets/bell.svg";
 // Css
 import "../Documentation/ListDocu.css"
@@ -19,48 +21,48 @@ const data = [
     },
     {
         key: '2',
-        fecha: '02/01/2022 - 13:43',
+        fecha: '15/01/2022 - 15:19',
         actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
+        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90',
+        documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
     },
     {
         key: '3',
-        fecha: '02/01/2022 - 13:43',
+        fecha: '12/01/2022 - 11:09',
         actividad: "Visualización mediante QR público",
         detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
+        documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
     },
     {
         key: '4',
-        fecha: '02/01/2022 - 13:43',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
-        usuario: "Usuario anónimo"
+        fecha: '11/01/2022 - 08:09',
+        actividad: "Modificación de metadatos asociados",
+        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado',
+        documento: "Memoria de calidades Expediente: PTR5656",
+        usuario: "Julio Marín"
     },
     {
         key: '5',
-        fecha: '02/01/2022 - 13:43',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
-        usuario: "Usuario anónimo"
+        fecha: '11/01/2022 - 08:09',
+        actividad: "Modificación de metadatos asociados",
+        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR',
+        documento: "Memoria de calidades Expediente: PTR5656",
+        usuario: "Julio Marín"
     },
     {
         key: '6',
-        fecha: '02/01/2022 - 13:43',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
+        fecha: '11/01/2022 - 08:09',
+        actividad: "Nuevo documento creado",
+        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR',
         documento: "Certificado emitido Expediente: PRT87965",
-        usuario: "Usuario anónimo"
+        usuario: "Julio Marín"
     },
     {
         key: '7',
-        fecha: '02/01/2022 - 13:43',
-        actividad: "Visualización mediante QR público",
+        fecha: '10/01/2022 - 15:19',
+        actividad: "Documento privado, intento de acceso fallido",
         detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
         documento: "Certificado emitido Expediente: PRT87965",
         usuario: "Usuario anónimo"
@@ -97,16 +99,19 @@ const columns = [
 
 const actividad = [
     {
-        actividad: "Visualización mediante QR público", id: 1
+        actividad: "Mostrar todo", id: 1
     },
     {
-        actividad: "Modificación de metadatos asociados", id: 2
+        actividad: "Visualización mediante QR público", id: 2
     },
     {
-        actividad: "Nuevo documento creado", id: 3
+        actividad: "Modificación de metadatos asociados", id: 3
     },
     {
-        actividad: "Documento privado,intento de acceso fallido", id: 4
+        actividad: "Nuevo documento creado", id: 4
+    },
+    {
+        actividad: "Documento privado, intento de acceso fallido", id: 5
     }
 ]
 
@@ -130,8 +135,19 @@ export default function Actividad() {
         />
     );
 
+    const handleActivy = (e) => {
+        const currValue = e.target.value;
+        if (currValue === "Mostrar todo") {
+            console.log("Sera que si?");
+            return setDataSource(data);
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.actividad.includes(currValue)
+            );
+            setDataSource(filteredData);
+        }
 
-
+    }
 
 
     return (
@@ -154,11 +170,17 @@ export default function Actividad() {
                                     setDataSource(filteredData);
                                 }}
                             />
+                            <span className="input-group-append">
+                                <button
+                                    className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5555" type="button">
+                                    <FontAwesomeIcon icon={faSearch} />
+                                </button>
+                            </span>
                         </Nav>
 
                         <Nav className="me-auto">
                             <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={chat} alt="chat" />
+                                <img src={chat} alt="chat" />
                             </button>
                         </Nav>
 
@@ -197,7 +219,7 @@ export default function Actividad() {
                             <div className="SelectBusqueda">
                                 <p className="title-filter">TIPO DE ACTIVIDAD</p>
 
-                                <Form.Select className="select-css" aria-label="Default select example">
+                                <Form.Select onClick={handleActivy} className="select-css" aria-label="Default select example">
                                     {
                                         actividad.map(actividad => (
                                             <option key={actividad.id} value={actividad.actividad} >{actividad.actividad}</option>

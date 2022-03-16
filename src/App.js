@@ -22,8 +22,9 @@ function App() {
         console.log(inactive);
         setInative(inactive);
       }} />
-      <div className={`container ${inactive ? "inactive" : ""}`}>
+      <div className={`containerTwo ${inactive ? "inactive" : ""}`}>
         <Routes>
+          <Route exact path={"/"} activeClassName="active" element={<ListDocu />} />
           <Route exact path={"/documentacion"} activeClassName="active" element={<ListDocu />} />
           <Route exact path={"/actividad"} activeClassName="active" element={<Actividad />} />
         </Routes>

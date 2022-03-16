@@ -68,6 +68,10 @@ body {
   margin-bottom: 8px;
   display: flex;
 }
+.menu-icon-css {
+  width: 24px;
+  height: 46px;
+}
 .side-menu .top-section .logo {
   width: 100%;
   background: white;
@@ -268,14 +272,17 @@ body {
 }
 
 .container {
-  margin-left: 130px;
+  margin-left: 330px;
   transition: margin-left 0.2s ease-in;
   padding-left: 50px;
-  padding-right: 50px;
+  /*padding-right: 50px;*/
   box-sizing: border-box;
 }
 
-.container.inactive {
-  margin-left: 80px;
+.containerTwo {
+  transition: margin-left 0.2s ease-in;
 }
 
+.containerTwo.inactive {
+  margin-left: -250px;
+}
