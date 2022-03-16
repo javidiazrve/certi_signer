@@ -3,7 +3,7 @@ import { Table, Input } from 'antd';
 import { Container, Row, Col, Form, Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import '../../components/Navbar/NavbarHeader.css';
+import '../../Components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
 import chat from "../../assets/notification.svg";
 import bell from "../../assets/bell.svg";
@@ -35,38 +35,6 @@ const data = [
         documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
     },
-    {
-        key: '4',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Modificación de metadatos asociados",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado',
-        documento: "Memoria de calidades Expediente: PTR5656",
-        usuario: "Julio Marín"
-    },
-    {
-        key: '5',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Modificación de metadatos asociados",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR',
-        documento: "Memoria de calidades Expediente: PTR5656",
-        usuario: "Julio Marín"
-    },
-    {
-        key: '6',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Nuevo documento creado",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR',
-        documento: "Certificado emitido Expediente: PRT87965",
-        usuario: "Julio Marín"
-    },
-    {
-        key: '7',
-        fecha: '10/01/2022 - 15:19',
-        actividad: "Documento privado, intento de acceso fallido",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
-        usuario: "Usuario anónimo"
-    }
 ];
 
 const columns = [

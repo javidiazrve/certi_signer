@@ -3,7 +3,7 @@ import { Table, Input } from 'antd';
 import { Container, Row, Col, Form, Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import '../../components/Navbar/NavbarHeader.css';
+import '../../Components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
 import chat from "../../assets/notification.svg";
 import bell from "../../assets/bell.svg";
