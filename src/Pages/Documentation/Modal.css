@@ -89,9 +89,17 @@
     background: transparent;
     border:0px;
 }
+
+.ant-tag{
+    margin-right: 5px !important;
+}
 .modal-title {
     font-weight: 700;
     color: #000000;
+}
+.dis-row{
+    justify-content: center;
+    display: flex;
 }
 .row-select {
     margin-top: 40px;
@@ -221,4 +229,8 @@
     margin-right: 10px;
     font-weight: 600;
     margin-top: 8px !important;
+}
+.fileName-css{
+    font-weight: 700;
+    color: #000000;
 }

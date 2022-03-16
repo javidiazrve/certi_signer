@@ -69,7 +69,7 @@ const columns = [
                     }
                     return (
                         <Tag style={{ color, marginRight }} key={tag}>
-                            {tag.toUpperCase()}
+                            {tag.text}
                         </Tag>
                     );
                 })}
@@ -80,6 +80,7 @@ const columns = [
         title: 'Documento',
         dataIndex: 'documento',
         key: 'documento'
+
     },
     {
         title: '',
@@ -115,7 +116,7 @@ const data = [
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
-        estado: "Acesso privado QR con contraseña",
+        estado: "Acceso privado QR con contraseña",
         fecha: "2022-01-22",
         visto: "15",
     },
@@ -129,7 +130,7 @@ const data = [
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={unlock} alt="unlock" />,
-        estado: "Acesso público mediante QR",
+        estado: "Acceso público mediante QR",
         fecha: "2022-01-15",
         visto: "15"
     },
@@ -143,7 +144,7 @@ const data = [
         documento: "Memoria de calidades",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
-        estado: "Acesso público mediante QR",
+        estado: "Acceso público mediante QR",
         fecha: "2022-01-12",
         visto: "0"
     },
@@ -157,7 +158,7 @@ const data = [
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
-        estado: "Acesso público mediante QR",
+        estado: "Acceso público mediante QR",
         fecha: "2022-01-13",
         visto: "112"
     }
@@ -218,19 +219,19 @@ const visibilidad = [
         seleccion: "Mostrar todo", id: 1
     },
     {
-        seleccion: "Acesso público mediante QR", id: 2
+        seleccion: "Acceso público mediante QR", id: 2
     },
     {
-        seleccion: "Acesso privado QR con contraseña", id: 3
+        seleccion: "Acceso privado QR con contraseña", id: 3
     },
 ]
 
 const visibilidadModal = [
     {
-        seleccion: "Acesso público mediante QR", id: 1
+        seleccion: "Acceso público mediante QR", id: 1
     },
     {
-        seleccion: "Acesso privado QR con contraseña", id: 2
+        seleccion: "Acceso privado QR con contraseña", id: 2
     },
 ]
 
@@ -259,6 +260,7 @@ class ListDocu extends Component {
         this.state = {
             busqueda: '',
             columnas: [],
+            showFile: false,
             modal: false,
             modalScreen: 0,
             showCategory: false,
@@ -267,6 +269,7 @@ class ListDocu extends Component {
             newCategory: '',
             newType: '',
             newCuenta: '',
+            acessdoc: '',
             categorias: '',
             visibilidades: '',
             categoriasModal: [
@@ -290,10 +293,10 @@ class ListDocu extends Component {
             ],
             visibilidadModal: [
                 {
-                    seleccion: "Acesso público mediante QR", id: 1
+                    seleccion: "Acceso público mediante QR", id: 1
                 },
                 {
-                    seleccion: "Acesso privado QR con contraseña", id: 2
+                    seleccion: "Acceso privado QR con contraseña", id: 2
                 },
             ],
             cuentas: [
@@ -317,6 +320,7 @@ class ListDocu extends Component {
             expediente: '',
             name: '',
             selectedFile: null,
+            selectedFileName: '',
             filterTable: null,
             columns: columns,
             baseData: data,
@@ -325,7 +329,7 @@ class ListDocu extends Component {
     }
 
     onFileChange = event => {
-        this.setState({ selectedFile: event.target.files[0] });
+        this.setState({ selectedFile: event.target.files[0], selectedFileName: event.target.files[0].name, showFile: true });
     };
 
     /*onFileUpload = () => {
@@ -360,7 +364,7 @@ class ListDocu extends Component {
     }
 
     modalCuenta = () => {
-        this.setState({ showCuenta: true})
+        this.setState({ showCuenta: true })
     }
 
     backModal = () => {
@@ -417,7 +421,7 @@ class ListDocu extends Component {
     handleVisibilidad = async (e) => {
         console.log(e.target.value);
         await this.setState({ visibilidad: e.target.value });
-        if (e.target.value === "Acesso privado QR con contraseña") {
+        if (e.target.value === "Acceso privado QR con contraseña") {
             this.setState({
                 password: true
             })
@@ -483,26 +487,32 @@ class ListDocu extends Component {
 
     onAddStudent = () => {
         const randomNumber = parseInt(Math.random() * 1000);
-        const newStudent = {
+        let newStudent = {
             key: randomNumber,
             categoria: this.state.categorias,
             tipo: this.state.type,
             expediente: this.state.expediente,
             cuenta: this.state.cliente,
-            etiquetas: ['ISO9001', 'EF2021'],
+            etiquetas: this.state.etiqueta,
             documento: this.state.name,
             fecha: "12/01/2022",
             visibilidad: this.state.visibilidad,
+            acessdoc: this.state.visibilidad === 'Acceso público mediante QR' ? <img src={unlock} /> : <img src={lock} />,
+            doctype: this.state.tipo === 'Certificado diplomado' ? <img src={pdf} /> : <img src={pdf} />,
             visto: 0
         };
 
+
         console.log("nuevoArchivo", newStudent);
+        console.log("nuevoArchivo2", newStudent.visibilidad);
 
         this.setState({
-            baseData: [...this.state.baseData, newStudent], busqueda: '',
+            baseData: [...this.state.baseData, newStudent],
+            busqueda: '',
             columnas: [],
             modal: false,
             modalScreen: 0,
+            //acessdoc : <img src={unlock} alt="unlock" />,
             showCategory: false,
             password: false,
             newCategory: '',
@@ -658,7 +668,7 @@ class ListDocu extends Component {
     }
 
     render() {
-        const { modal, modalScreen, showCategory, showTipo, showCuenta } = this.state;
+        const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile } = this.state;
         const { filterTable, columns, baseData } = this.state;
 
 
@@ -927,8 +937,16 @@ class ListDocu extends Component {
                                             </Modal>
 
                                         </Row>
-
-                                        <Row className="row-select">
+                                        {this.state.showFile === true && (
+                                            <>
+                                                <Row>
+                                                    <Col lg="12" className="dis-row">
+                                                        <label><span className="fileName-css">Nombre del Documento:</span> {this.state.selectedFileName}</label>
+                                                    </Col>
+                                                </Row>
+                                            </>
+                                        )}
+                                        <Row>
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicEtiquetas">
                                                     <Form.Label className="title-filter-modal">Etiquetas</Form.Label>

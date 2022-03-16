@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/logo/LogoCerti.png";
 import menuIcon from "../assets/ic_menu.svg";
+import doc from "../assets/doc.svg";
+import actividad from "../assets/actividad.svg";
+import user from "../assets/user.svg";
+
+
+
 
 import MenuItem from "./MenuItem";
 
+
 const menuItems = [
   {
-    name: "Documentación", exact: true, to: '/documentacion', iconClassName: 'bi bi-speedometer2'
+    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc
   },
   {
-    name: "Actividad", exact: true, to: '/actividad', iconClassName: 'bi bi-speedometer2'
+    name: "Actividad", exact: true, to: '/actividad', iconClassName: actividad
   },
   /*{
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },*/
   {
-    name: "Usuarios", exact: true, to: '/usuario', iconClassName: 'bi bi-speedometer2'
+    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user
   }
 ]
 
@@ -46,7 +54,24 @@ const SideMenu = (props) => {
 
       <div className={`main-menu ${inactive ? "inactive" : ""}`}>
         <ul>
-          {
+            {
+              menuItems.map(item => (
+                <li className="padding-li" onClick={props.onClick}>
+                  <NavLink
+                    exact
+                    to={item.to}
+                    className={`menu-item`}
+                    activeclassname="active"
+                  >
+                    <div className="menu-icon">
+                      <img className="share-icon" src={item.iconClassName} alt="share" />
+                    </div>
+                    <span>{item.name}</span>
+                  </NavLink>
+                </li>
+              ))
+            }
+          {/*
             menuItems.map((menuItem, index) => (
               <MenuItem
                 key={index}
@@ -61,7 +86,7 @@ const SideMenu = (props) => {
                 }}
               />
             ))
-          }
+              */}
           {/*<li>
             <a className="menu-item">
               <div className="menu-icon">
