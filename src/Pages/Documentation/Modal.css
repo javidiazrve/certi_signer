@@ -30,7 +30,7 @@
 .title-filter-modal {
     color: #515151;
     font-weight: 500;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 .redColorModal1 {
     color: #ff0000;
@@ -233,4 +233,21 @@
 .fileName-css{
     font-weight: 700;
     color: #000000;
+}
+
+.text-validate{
+    color: red;
+    font-weight: 600;
+}
+
+.modal-content {
+
+    width: auto !important;
+
+}
+
+.registered-input{
+    font-weight: 600;
+    padding-left: 0;
+    background: transparent !important;
 }

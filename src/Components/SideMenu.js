@@ -4,6 +4,7 @@ import logo from "../assets/logo/LogoCerti.png";
 import menuIcon from "../assets/ic_menu.svg";
 import doc from "../assets/doc.svg";
 import actividad from "../assets/actividad.svg";
+import actividadwhite from "../assets/actividadwhite.svg";
 import user from "../assets/user.svg";
 
 
@@ -14,16 +15,16 @@ import MenuItem from "./MenuItem";
 
 const menuItems = [
   {
-    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc
+    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc, iconClassNameWhite: actividadwhite,
   },
   {
-    name: "Actividad", exact: true, to: '/actividad', iconClassName: actividad
+    name: "Actividad", exact: true, to: '/actividad', iconClassName: actividad, iconClassNameWhite: actividadwhite,
   },
   /*{
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },*/
   {
-    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user
+    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user, iconClassNameWhite: actividadwhite,
   }
 ]
 
@@ -54,23 +55,23 @@ const SideMenu = (props) => {
 
       <div className={`main-menu ${inactive ? "inactive" : ""}`}>
         <ul>
-            {
-              menuItems.map(item => (
-                <li className="padding-li" onClick={props.onClick}>
-                  <NavLink
-                    exact
-                    to={item.to}
-                    className={`menu-item`}
-                    activeclassname="active"
-                  >
-                    <div className="menu-icon">
-                      <img className="share-icon" src={item.iconClassName} alt="share" />
-                    </div>
-                    <span>{item.name}</span>
-                  </NavLink>
-                </li>
-              ))
-            }
+          {
+            menuItems.map(item => (
+              <li className="padding-li" onClick={props.onClick}>
+                <NavLink
+                  exact
+                  to={item.to}
+                  className={`menu-item`}
+                  activeclassname="active"
+                >
+                      <div className="menu-icon">
+                        <img className="share-icon" src={item.iconClassName} alt="share" />
+                      </div>
+                      <span>{item.name}</span>
+                </NavLink>
+              </li>
+            ))
+          }
           {/*
             menuItems.map((menuItem, index) => (
               <MenuItem

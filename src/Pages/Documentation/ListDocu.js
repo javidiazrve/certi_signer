@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Table, Tag, Input } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faListCheck, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import '../../Components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
@@ -112,7 +112,13 @@ const data = [
         tipo: "Certificado diplomado",
         expediente: "PRT69786",
         cuenta: "Grupo Aliseda SA",
-        etiquetas: ['ISO9000', 'EF2021'],
+        etiquetas: [{
+            text: 'ISO9000'
+        },
+        {
+            text: 'EF2021'
+        }
+        ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
@@ -126,7 +132,13 @@ const data = [
         tipo: "Certificado ampliado",
         expediente: "PRT78698",
         cuenta: "Industrias YGUS SL",
-        etiquetas: ['ISO9000', 'EF2021'],
+        etiquetas: [{
+            text: 'ISO9000'
+        },
+        {
+            text: 'EF2021'
+        }
+        ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={unlock} alt="unlock" />,
@@ -140,7 +152,13 @@ const data = [
         tipo: "Folleto técnico",
         expediente: "PRT78697",
         cuenta: "Solis Ingeniería SA",
-        etiquetas: ['ISO9001', 'EF2021'],
+        etiquetas: [{
+            text: 'ISO9001'
+        },
+        {
+            text: 'EF2021'
+        }
+        ],
         documento: "Memoria de calidades",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
@@ -154,7 +172,13 @@ const data = [
         tipo: "Certificado diploma",
         expediente: "490 (+91)",
         cuenta: "Grupo Córtex SA",
-        etiquetas: ['ISO9000', 'EF2021'],
+        etiquetas: [{
+            text: 'ISO9000'
+        },
+        {
+            text: 'EF2021'
+        }
+        ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
@@ -258,14 +282,26 @@ class ListDocu extends Component {
         super(props);
 
         this.state = {
+            nameError: '',
+            expedienteError: '',
+            documentError: '',
+            categoryError: '',
+            tipoError: '',
+            visibilidadError: '',
+            cuentaError: '',
             busqueda: '',
             columnas: [],
             showFile: false,
             modal: false,
             modalScreen: 0,
             showCategory: false,
+            showChangeCategory: false,
+            showChangeType: false,
             showTipo: false,
+            showChangeVisibilidad: false,
+            showChangeDescrip: false,
             password: false,
+            passwordChange: false,
             newCategory: '',
             newType: '',
             newCuenta: '',
@@ -274,6 +310,9 @@ class ListDocu extends Component {
             visibilidades: '',
             categoriasModal: [
                 {
+                    categoria: "Selecciona una categoría", id: 0
+                },
+                {
                     categoria: "Certificación Calidad ISO 9000", id: 1
                 },
                 {
@@ -281,6 +320,9 @@ class ListDocu extends Component {
                 },
             ],
             tiposModal: [
+                {
+                    tipo: "Selecciona un tipo", id: 0
+                },
                 {
                     tipo: "Certificado diplomado", id: 1
                 },
@@ -293,6 +335,9 @@ class ListDocu extends Component {
             ],
             visibilidadModal: [
                 {
+                    seleccion: "Selecciona tipo de Acceso", id: 0
+                },
+                {
                     seleccion: "Acceso público mediante QR", id: 1
                 },
                 {
@@ -300,6 +345,9 @@ class ListDocu extends Component {
                 },
             ],
             cuentas: [
+                {
+                    cuenta: "Selecciona cuenta", id: 0
+                },
                 {
                     cuenta: "Grupo Aliseda SA", id: 1
                 },
@@ -324,7 +372,11 @@ class ListDocu extends Component {
             filterTable: null,
             columns: columns,
             baseData: data,
-            etiqueta: []
+            etiqueta: [],
+            newCategoryChange: '',
+            newTypeChange: '',
+            newVisibilidadChange: '',
+            newDescrip: '',
         };
     }
 
@@ -358,9 +410,32 @@ class ListDocu extends Component {
     modalCategory = () => {
         this.setState({ showCategory: true })
     }
+    modalChangeCategory = () => {
+        this.setState({ showChangeCategory: true })
+    }
 
     modalType = () => {
         this.setState({ showTipo: true })
+    }
+
+    modalChangeType = () => {
+        this.setState({ showChangeType: true })
+    }
+
+    modalChangeVisibilidad = () => {
+        this.setState({ showChangeVisibilidad: true })
+    }
+
+    modalClosedChangeVisibilidad = () => {
+        this.setState({ showChangeVisibilidad: false })
+    }
+
+    modalChangeDescrip = () => {
+        this.setState({ showChangeDescrip: true})
+    }
+
+    modalClosedChangeDescrip = () => {
+        this.setState({ showChangeDescrip: false})
     }
 
     modalCuenta = () => {
@@ -398,12 +473,23 @@ class ListDocu extends Component {
         })
     }
 
+    modalClosedChangeCategory = () => {
+        this.setState({
+            showChangeCategory: false
+        })
+    }
+
     handleSubmit = () => {
-        this.setState(
-            {
-                modalScreen: 1,
-            }
-        );
+        if (this.validate()) {
+            this.setState(
+                {
+                    modalScreen: 1,
+                }
+            );
+        } else {
+            console.log("faltan datos")
+        }
+
     };
 
     handleSubmitStep2 = () => {
@@ -581,6 +667,50 @@ class ListDocu extends Component {
         console.log("Es nuevo?", this.state.categoriasModal)
     }
 
+    changeCategory = async (e) => {
+        await this.setState({ newCategoryChange: e.target.value });
+    }
+
+    saveChangeCategory = async () => {
+        await this.setState({ categorias: this.state.newCategoryChange, showChangeCategory: false, });
+    }
+
+    changeType = async (e) => {
+        await this.setState({ newTypeChange: e.target.value })
+    }
+
+    saveChangeType = async () => {
+        await this.setState({ type: this.state.newTypeChange, showChangeType: false })
+    }
+
+    changeDescrip = async (e) => {
+        this.setState({ newDescrip: e.target.value });
+    }
+
+    saveChangeDescrip = async () => {
+
+        await this.setState({ name: this.state.newDescrip, showChangeDescrip: false });
+    }
+
+    changeVisibilidad = async (e) => {
+        await this.setState({ newVisibilidadChange: e.target.value });
+        if (e.target.value === "Acceso privado QR con contraseña") {
+            this.setState({
+                passwordChange: true
+            })
+        } else {
+            this.setState({
+                passwordChange: false
+            })
+        }
+    }
+
+    saveChangeVisibilidad = async () => {
+        await this.setState({ visibilidad: this.state.newVisibilidadChange, showChangeVisibilidad: false })
+    }
+
+
+
     addNewType = async (e) => {
 
         this.setState({ newType: e.target.value });
@@ -667,8 +797,46 @@ class ListDocu extends Component {
         }
     }
 
+
+    validate() {
+        let nameError = "";
+        let categoryError = "";
+        let tipoError = "";
+        let visibilidadError = "";
+        let expedienteError = "";
+        let documentError = "";
+        let cuentaError = "";
+        if (!this.state.name) {
+            nameError = "Este campo es requerido";
+        }
+        if (this.state.categorias === "" || this.state.categorias === "Selecciona una categoría") {
+            categoryError = "Este campo es requerido"
+        }
+        if (this.state.type === "" || this.state.type === "Selecciona un tipo") {
+            tipoError = "Este campo es requerido"
+        }
+        if (this.state.visibilidad === "" || this.state.visibilidad === "Selecciona tipo de Acceso") {
+            visibilidadError = "Este campo es requerido"
+        }
+        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!this.state.expediente) {
+            expedienteError = "Este campo es requerido";
+        }
+        if (!this.state.selectedFile) {
+            documentError = "El documento es requerido";
+        }
+        if (this.state.cliente === "" || this.state.cliente === "Selecciona cuenta") {
+            cuentaError = "Este campo es requerido";
+        }
+        if (expedienteError || nameError || documentError || categoryError || tipoError || visibilidadError, cuentaError) {
+            this.setState({ nameError, expedienteError, documentError, categoryError, tipoError, visibilidadError, cuentaError });
+            return false;
+        }
+        return true;
+    }
+
     render() {
-        const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile } = this.state;
+        const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile, showChangeCategory, showChangeType, showChangeVisibilidad,showChangeDescrip } = this.state;
         const { filterTable, columns, baseData } = this.state;
 
 
@@ -809,6 +977,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
+                                                    <span className="text-validate">{this.state.categoryError}</span>
                                                     <Button className="redColorModal1" onClick={this.modalCategory}>Añadir nueva categoría</Button>
                                                 </div>
                                             </Col>
@@ -844,6 +1013,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
+                                                    <span className="text-validate">{this.state.tipoError}</span>
                                                     <Button className="redColorModal1" onClick={this.modalType}>Añadir nuevo tipo</Button>
                                                 </div>
                                             </Col>
@@ -880,6 +1050,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
+                                                    <span className="text-validate">{this.state.visibilidadError}</span>
                                                 </div>
                                             </Col>
 
@@ -888,15 +1059,17 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Nombre Descripción</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" onChange={this.handleNombre} />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.name} onChange={this.handleNombre} />
                                                 </Form.Group>
+                                                <span className="text-validate">{this.state.nameError}</span>
                                             </Col>
 
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Expediente Asociado</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" onChange={this.handleExpediente} />
+                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.expediente} onChange={this.handleExpediente} />
                                                 </Form.Group>
+                                                <span className="text-validate">{this.state.expedienteError}</span>
                                             </Col>
 
                                             <Col lg="4">
@@ -909,6 +1082,7 @@ class ListDocu extends Component {
                                                             ))
                                                         }
                                                     </Form.Select>
+                                                    <span className="text-validate">{this.state.cuentaError}</span>
                                                     <Button className="redColorModal1" onClick={this.modalCuenta}>Añadir nueva cuenta cliente</Button>
                                                 </div>
                                             </Col>
@@ -968,6 +1142,7 @@ class ListDocu extends Component {
                                                 <label htmlFor="files" className="uploadButton btn">Seleccionar el documento a cargar</label>
                                                 <input id="files" style={{ visibility: "hidden" }} type="file" onChange={this.onFileChange} />
                                             </Col>
+                                            <span className="text-validate" style={{ textAlign: "center" }}>{this.state.documentError}</span>
 
                                         </Row>
                                         {this.state.password === true && (
@@ -976,7 +1151,7 @@ class ListDocu extends Component {
                                                     <Col lg="4">
                                                         <Form.Group className="mb-3" controlId="formBasicPassword">
                                                             <Form.Label className="title-filter-modal">Contraseña de acceso</Form.Label>
-                                                            <Form.Control className="input-Form" type="text" placeholder="" />
+                                                            <Form.Control className="input-Form newCategory-css" type="text" placeholder="" />
                                                         </Form.Group>
                                                     </Col>
                                                 </Row>
@@ -996,7 +1171,7 @@ class ListDocu extends Component {
                                     <Modal.Title id="contained-modal-title-vcenter">
                                         Nuevo documento
                                     </Modal.Title>
-                                    <Button className="out-css" onClick={this.modalClose}>X</Button>
+                                    <Button className="out-css-header" onClick={this.modalClose}>X</Button>
 
                                 </Modal.Header>
 
@@ -1007,62 +1182,185 @@ class ListDocu extends Component {
                                         <Row className="row-select">
                                             <Col lg="4">
                                                 <div className="SelectBusqueda">
-                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                    <Form.Group controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Categoría</Form.Label>
-                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.categorias} placeholder="" disabled />
+                                                        <Form.Control className="input-Form registered-input" type="text" value={this.state.categorias} placeholder="" disabled />
                                                     </Form.Group>
-                                                    <a className="redColor">Cambiar</a>
+                                                    <Button className="redColorModal1" onClick={this.modalChangeCategory}>Cambiar</Button>
                                                 </div>
                                             </Col>
-
+                                            <Modal show={showChangeCategory} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Seleccione la nueva Categoría</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeCategory}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <div className="SelectBusqueda">
+                                                        <Form.Select onClick={this.changeCategory} className="select-css-modal" aria-label="Default select example">
+                                                            {
+                                                                this.state.categoriasModal.map(valor => (
+                                                                    <option key={valor.id} value={valor.categoria} >{valor.categoria}</option>
+                                                                ))
+                                                            }
+                                                        </Form.Select>
+                                                    </div>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeCategory}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeCategory}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
                                             <Col lg="4">
                                                 <div className="SelectBusqueda">
-                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                    <Form.Group controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Tipo</Form.Label>
-                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.type} placeholder="" disabled />
+                                                        <Form.Control className="input-Form registered-input" type="text" value={this.state.type} placeholder="" disabled />
                                                     </Form.Group>
-                                                    <a className="redColor">Cambiar</a>
+                                                    <Button className="redColorModal1" onClick={this.modalChangeType}>Cambiar</Button>
                                                 </div>
                                             </Col>
-
+                                            <Modal show={showChangeType} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Seleccione el Tipo</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeType}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <div className="SelectBusqueda">
+                                                        <Form.Select onClick={this.changeType} className="select-css-modal" aria-label="Default select example">
+                                                            {
+                                                                this.state.tiposModal.map(valor => (
+                                                                    <option key={valor.id} value={valor.tipo} >{valor.tipo}</option>
+                                                                ))
+                                                            }
+                                                        </Form.Select>
+                                                    </div>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeType}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeType}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
                                             <Col lg="4">
                                                 <div className="SelectBusqueda">
-                                                    <Form.Group className="mb-3" controlId="formBasicName">
+                                                    <Form.Group controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Visibilidad</Form.Label>
-                                                        <Form.Control className="input-Form newCategory-css" type="text" value={this.state.visibilidad} placeholder="" disabled />
+                                                        <Form.Control className="input-Form registered-input" type="text" value={this.state.visibilidad} placeholder="" disabled />
                                                     </Form.Group>
+                                                    <Button className="redColorModal1" onClick={this.modalChangeVisibilidad}>Cambiar</Button>
                                                 </div>
                                             </Col>
+                                            <Modal show={showChangeVisibilidad} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Visibilidad</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeVisibilidad}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Row>
+                                                        <Col lg="12">
+                                                            <div className="SelectBusqueda">
+                                                                <Form.Select onClick={this.changeVisibilidad} className="select-css-modal" aria-label="Default select example">
+                                                                    {
+                                                                        this.state.visibilidadModal.map(valor => (
+                                                                            <option key={valor.id} value={valor.seleccion} >{valor.seleccion}</option>
+                                                                        ))
+                                                                    }
+                                                                </Form.Select>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
 
+                                                    {this.state.passwordChange === true && (
+                                                        <>
+                                                            <Row className="row-select">
+                                                                <Col lg="12">
+                                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                                        <Form.Label className="title-filter-modal">Contraseña de acceso</Form.Label>
+                                                                        <Form.Control className="input-Form newCategory-css" type="text" placeholder="" />
+                                                                    </Form.Group>
+                                                                </Col>
+                                                            </Row>
+                                                        </>
+                                                    )}
+
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeVisibilidad}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeVisibilidad}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
                                         </Row>
                                         <Row className="row-select">
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicName">
+                                                <Form.Group controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Nombre o Descripción:</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.name} disabled />
+                                                    <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.name} disabled />
                                                 </Form.Group>
+                                                <Button className="redColorModal1" onClick={this.modalChangeDescrip}>Cambiar</Button>
                                             </Col>
 
+                                            <Modal show={showChangeDescrip} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Cambiar Descripción</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeDescrip}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form.Group controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Nombre o Descripción:</Form.Label>
+                                                        <Form.Control className="input-Form registered-input" type="text" placeholder=""  onChange={this.changeDescrip}  />
+                                                    </Form.Group>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeDescrip}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeDescrip}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
+
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicExpediente">
+                                                <Form.Group controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Expediente:</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.expediente} disabled />
+                                                    <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.expediente} disabled />
                                                 </Form.Group>
+                                                <Button className="redColorModal1" onClick={this.modalChangeVisibilidad}>Cambiar</Button>
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicCuenta">
+                                                <Form.Group controlId="formBasicCuenta">
                                                     <Form.Label className="title-filter-modal">Cuenta cliente:</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.cliente} disabled />
+                                                    <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.cliente} disabled />
                                                 </Form.Group>
+                                                <Button className="redColorModal1" onClick={this.modalChangeVisibilidad}>Cambiar</Button>
                                             </Col>
                                         </Row>
 
                                         <Row className="row-select">
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicName">
+                                                <Form.Group controlId="formBasicName">
                                                     <Form.Label className="title-filter-modal">Documento a publicar:</Form.Label>
-                                                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
+                                                    <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
                                                 </Form.Group>
                                             </Col>
 
