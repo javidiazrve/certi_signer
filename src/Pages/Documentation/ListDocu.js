@@ -292,6 +292,7 @@ class ListDocu extends Component {
             busqueda: '',
             columnas: [],
             showFile: false,
+            showNewFile: false,
             modal: false,
             modalScreen: 0,
             showCategory: false,
@@ -300,6 +301,10 @@ class ListDocu extends Component {
             showTipo: false,
             showChangeVisibilidad: false,
             showChangeDescrip: false,
+            showChangeExpe: false,
+            showChangeCliente: false,
+            showChangeDoc: false,
+            showChangeTag: false,
             password: false,
             passwordChange: false,
             newCategory: '',
@@ -373,10 +378,15 @@ class ListDocu extends Component {
             columns: columns,
             baseData: data,
             etiqueta: [],
+            newEtiqueta: [],
             newCategoryChange: '',
             newTypeChange: '',
             newVisibilidadChange: '',
             newDescrip: '',
+            newExpe: '',
+            newClienteChange: '',
+            newFile: null,
+            newFileName: '',
         };
     }
 
@@ -431,11 +441,43 @@ class ListDocu extends Component {
     }
 
     modalChangeDescrip = () => {
-        this.setState({ showChangeDescrip: true})
+        this.setState({ showChangeDescrip: true })
     }
 
     modalClosedChangeDescrip = () => {
-        this.setState({ showChangeDescrip: false})
+        this.setState({ showChangeDescrip: false })
+    }
+
+    modalChangeExpe = () => {
+        this.setState({ showChangeExpe: true })
+    }
+
+    modalClosedChangeExpe = () => {
+        this.setState({ showChangeExpe: false })
+    }
+
+    modalChangeCliente = () => {
+        this.setState({ showChangeCliente: true })
+    }
+
+    modalClosedChangeCliente = () => {
+        this.setState({ showChangeCliente: false })
+    }
+
+    modalChangeDoc = () => {
+        this.setState({ showChangeDoc: true })
+    }
+
+    modalClosedChangeDoc = () => {
+        this.setState({ showChangeDoc: false })
+    }
+
+    modalChangeTag = () => {
+        this.setState({ showChangeTag: true })
+    }
+
+    modalClosedChangeTag = () => {
+        this.setState({ showChangeTag: false })
     }
 
     modalCuenta = () => {
@@ -638,6 +680,14 @@ class ListDocu extends Component {
         console.log("Etiquetas", this.state.etiqueta);
     };
 
+    changeTag = tag => {
+        this.setState({ newEtiqueta: [...this.state.newEtiqueta, tag] })
+    }
+
+    saveChangeTag = () => {
+        this.setState({ etiqueta: this.state.newEtiqueta, showChangeTag: false })
+    }
+
     handleDrag = (tag, currPos, newPos) => {
         //const newTags = tags.slice();
 
@@ -683,6 +733,14 @@ class ListDocu extends Component {
         await this.setState({ type: this.state.newTypeChange, showChangeType: false })
     }
 
+    changeCliente = async (e) => {
+        await this.setState({ newClienteChange: e.target.value })
+    }
+
+    saveChangeCliente = async () => {
+        await this.setState({ cliente: this.state.newClienteChange, showChangeCliente: false })
+    }
+
     changeDescrip = async (e) => {
         this.setState({ newDescrip: e.target.value });
     }
@@ -690,6 +748,22 @@ class ListDocu extends Component {
     saveChangeDescrip = async () => {
 
         await this.setState({ name: this.state.newDescrip, showChangeDescrip: false });
+    }
+
+    changeExpe = async (e) => {
+        this.setState({ newExpe: e.target.value });
+    }
+
+    saveChangeExpe = async () => {
+        await this.setState({ expediente: this.state.newExpe, showChangeExpe: false });
+    }
+
+    changeDoc = async (e) => {
+        this.setState({ newFile: e.target.files[0], newFileName: e.target.files[0].name, showNewFile: true });
+    }
+
+    saveChangeDoc = async () => {
+        await this.setState({ selectedFile: this.state.newFile, selectedFileName: this.state.newFileName, showChangeDoc: false });
     }
 
     changeVisibilidad = async (e) => {
@@ -836,7 +910,7 @@ class ListDocu extends Component {
     }
 
     render() {
-        const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile, showChangeCategory, showChangeType, showChangeVisibilidad,showChangeDescrip } = this.state;
+        const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile, showChangeCategory, showChangeType, showChangeVisibilidad, showChangeDescrip, showChangeExpe, showChangeCliente, showChangeDoc, showChangeTag } = this.state;
         const { filterTable, columns, baseData } = this.state;
 
 
@@ -1326,7 +1400,7 @@ class ListDocu extends Component {
                                                 <Modal.Body>
                                                     <Form.Group controlId="formBasicName">
                                                         <Form.Label className="title-filter-modal">Nombre o Descripción:</Form.Label>
-                                                        <Form.Control className="input-Form registered-input" type="text" placeholder=""  onChange={this.changeDescrip}  />
+                                                        <Form.Control className="input-Form registered-input" type="text" placeholder="" onChange={this.changeDescrip} />
                                                     </Form.Group>
                                                 </Modal.Body>
                                                 <Modal.Footer>
@@ -1344,17 +1418,67 @@ class ListDocu extends Component {
                                                     <Form.Label className="title-filter-modal">Expediente:</Form.Label>
                                                     <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.expediente} disabled />
                                                 </Form.Group>
-                                                <Button className="redColorModal1" onClick={this.modalChangeVisibilidad}>Cambiar</Button>
+                                                <Button className="redColorModal1" onClick={this.modalChangeExpe}>Cambiar</Button>
                                             </Col>
+
+                                            <Modal show={showChangeExpe} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Cambiar Expediente</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeDescrip}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Form.Group controlId="formBasicName">
+                                                        <Form.Label className="title-filter-modal">Nombre del Expediente:</Form.Label>
+                                                        <Form.Control className="input-Form registered-input" type="text" placeholder="" onChange={this.changeExpe} />
+                                                    </Form.Group>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeExpe}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeExpe}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
 
                                             <Col lg="4">
                                                 <Form.Group controlId="formBasicCuenta">
                                                     <Form.Label className="title-filter-modal">Cuenta cliente:</Form.Label>
                                                     <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.cliente} disabled />
                                                 </Form.Group>
-                                                <Button className="redColorModal1" onClick={this.modalChangeVisibilidad}>Cambiar</Button>
+                                                <Button className="redColorModal1" onClick={this.modalChangeCliente}>Cambiar</Button>
                                             </Col>
                                         </Row>
+                                        <Modal show={showChangeCliente} aria-labelledby="contained-modal-title-vcenter"
+                                            centered>
+                                            <Modal.Header>
+                                                <p className="modal-title">Seleccione el Cliente</p>
+                                                <Button className="out-css-header" onClick={this.modalClosedChangeType}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                </Button>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <div className="SelectBusqueda">
+                                                    <Form.Select onClick={this.changeCliente} className="select-css-modal" aria-label="Default select example">
+                                                        {
+                                                            this.state.cuentas.map(valor => (
+                                                                <option key={valor.id} value={valor.cuenta} >{valor.cuenta}</option>
+                                                            ))
+                                                        }
+                                                    </Form.Select>
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button className="out-csz" onClick={this.modalClosedChangeCliente}>
+                                                    Cancelar
+                                                </Button>
+                                                <Button className="next-css" onClick={this.saveChangeCliente}>
+                                                    Guardar cambio
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
 
                                         <Row className="row-select">
                                             <Col lg="4">
@@ -1362,12 +1486,52 @@ class ListDocu extends Component {
                                                     <Form.Label className="title-filter-modal">Documento a publicar:</Form.Label>
                                                     <Form.Control className="input-Form registered-input" type="text" placeholder="" value={this.state.selectedFile.name} disabled />
                                                 </Form.Group>
+                                                <Button className="redColorModal1" onClick={this.modalChangeDoc}>Cambiar</Button>
                                             </Col>
+
+                                            <Modal show={showChangeDoc} aria-labelledby="contained-modal-title-vcenter"
+                                                centered>
+                                                <Modal.Header>
+                                                    <p className="modal-title">Cambiar Documento</p>
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeDoc}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    </Button>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <Row>
+                                                        <Col lg="12">
+                                                            {this.state.showNewFile === true && (
+                                                                <>
+                                                                    <Row>
+                                                                        <Col lg="12" className="dis-row">
+                                                                            <label><span className="fileName-css">Nombre del Documento:</span> {this.state.newFileName}</label>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </>
+                                                            )}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col lg="12">
+                                                            <label htmlFor="files" className="uploadButton btn" > Seleccionar el documento a cargar </label>
+                                                            <input id="files" style={{ visibility: "hidden" }} type="file" onChange={this.changeDoc} />
+                                                        </Col>
+                                                    </Row>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button className="out-csz" onClick={this.modalClosedChangeDoc}>
+                                                        Cancelar
+                                                    </Button>
+                                                    <Button className="next-css" onClick={this.saveChangeDoc}>
+                                                        Guardar cambio
+                                                    </Button>
+                                                </Modal.Footer>
+                                            </Modal>
 
                                             <Col lg="4">
                                                 <Form.Group style={{ marginBottom: "8px !important" }} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
+                                                <Button className="redColorModal1" onClick={this.modalChangeTag}>Cambiar</Button>
                                                 {
                                                     this.state.etiqueta.map(valor => (
                                                         <span className="tag-span" key={valor.id}>{valor.text}</span>
@@ -1375,6 +1539,38 @@ class ListDocu extends Component {
                                                 }
                                             </Col>
                                         </Row>
+                                        <Modal show={showChangeTag} aria-labelledby="contained-modal-title-vcenter"
+                                            centered>
+                                            <Modal.Header>
+                                                <p className="modal-title">Cambiar Etiqueta</p>
+                                                <Button className="out-css-header" onClick={this.modalClosedChangeTag}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                </Button>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <Form.Group className="mb-3" controlId="formBasicEtiquetas">
+                                                    <Form.Label className="title-filter-modal">Etiquetas</Form.Label>
+                                                    <ReactTags
+                                                        className="newCategory-css"
+                                                        tags={this.state.newEtiqueta}
+                                                        handleDelete={this.handleDelete}
+                                                        handleAddition={this.changeTag}
+                                                        handleDrag={this.handleDrag}
+                                                        handleTagClick={this.handleTagClick}
+                                                        inputFieldPosition="bottom"
+                                                        autocomplete
+                                                    />
+                                                </Form.Group>
+
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button className="out-csz" onClick={this.modalClosedChangeTag}>
+                                                    Cancelar
+                                                </Button>
+                                                <Button className="next-css" onClick={this.saveChangeTag}>
+                                                    Guardar cambio
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
                                         <div className="info-box">
                                             <Row>
                                                 <Col lg="3" className="flex">
@@ -1415,7 +1611,6 @@ class ListDocu extends Component {
                                                         <Form.Label className="title-filter-modal">Categoría</Form.Label>
                                                         <Form.Control className="input-Form newCategory-css" type="text" value={this.state.categorias} placeholder="" disabled />
                                                     </Form.Group>
-                                                    <a className="redColor">Cambiar</a>
                                                 </div>
                                             </Col>
 
@@ -1425,7 +1620,6 @@ class ListDocu extends Component {
                                                         <Form.Label className="title-filter-modal">Tipo</Form.Label>
                                                         <Form.Control className="input-Form newCategory-css" type="text" value={this.state.type} placeholder="" disabled />
                                                     </Form.Group>
-                                                    <a className="redColor">Cambiar</a>
                                                 </div>
                                             </Col>
 
@@ -1476,7 +1670,7 @@ class ListDocu extends Component {
                                                 </Form.Group>
                                                 {
                                                     this.state.etiqueta.map(valor => (
-                                                        <span key={valor.id}>{valor.text}</span>
+                                                        <span className="tag-span" key={valor.id}>{valor.text}</span>
                                                     ))
                                                 }
                                             </Col>
