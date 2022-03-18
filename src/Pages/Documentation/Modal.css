@@ -13,6 +13,9 @@
     font-weight: 600;
     background: transparent !important;
 }
+.border{
+    border-radius: 8px;
+}
 .ReactTags__tagInputField{
     border: 1px solid #102973 !important;
     border-radius: 8px !important;
@@ -192,6 +195,18 @@
     border: 1px solid #102973 !important;
     border-radius: 5px;
     cursor:pointer;
+    margin-left: 5px;
+    margin-top: 48px;
+}
+
+.tag-wrapper {
+    padding: 3px;
+    border: 1px solid #102973 !important;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 1;
+    cursor: move;
+    margin-top: 48px;
     margin-left: 5px;
 }
 .ReactTags__remove{

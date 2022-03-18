@@ -178,21 +178,13 @@ export default function Actividad() {
                             </span>
                         </Nav>
 
-                        <Nav className="me-auto">
-                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img src={chat} alt="chat" />
-                            </button>
-                        </Nav>
-
-                        <Nav className="me-auto">
-                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={bell} alt="bell" />
-                            </button>
-                        </Nav>
+                    
 
                         <div className="container-user">
                             <div className="avatar">
-                                <img className="user-css" src={user} alt="user" />
+                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                <img className="nav-icon" src={bell} alt="bell" />
+                            </button>
                             </div>
                             <div className="user-info-nav">
                                 <p className="name-user">Marta Dieguez</p>

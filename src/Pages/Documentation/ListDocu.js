@@ -3,6 +3,8 @@ import { Table, Tag, Input } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListCheck, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
+import ChipInput from 'material-ui-chip-input';
+
 import '../../Components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
 import chat from "../../assets/notification.svg";
@@ -69,7 +71,7 @@ const columns = [
                     }
                     return (
                         <Tag style={{ color, marginRight }} key={tag}>
-                            {tag.text}
+                            {tag}
                         </Tag>
                     );
                 })}
@@ -112,12 +114,8 @@ const data = [
         tipo: "Certificado diplomado",
         expediente: "PRT69786",
         cuenta: "Grupo Aliseda SA",
-        etiquetas: [{
-            text: 'ISO9000'
-        },
-        {
-            text: 'EF2021'
-        }
+        etiquetas: [
+            'ISO9000','EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -132,12 +130,8 @@ const data = [
         tipo: "Certificado ampliado",
         expediente: "PRT78698",
         cuenta: "Industrias YGUS SL",
-        etiquetas: [{
-            text: 'ISO9000'
-        },
-        {
-            text: 'EF2021'
-        }
+        etiquetas: [
+            'ISO9000','EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -152,12 +146,8 @@ const data = [
         tipo: "Folleto técnico",
         expediente: "PRT78697",
         cuenta: "Solis Ingeniería SA",
-        etiquetas: [{
-            text: 'ISO9001'
-        },
-        {
-            text: 'EF2021'
-        }
+        etiquetas:  [
+            'ISO9000','EF2021'
         ],
         documento: "Memoria de calidades",
         doctype: <img src={pdf} alt="pdf" />,
@@ -172,12 +162,8 @@ const data = [
         tipo: "Certificado diploma",
         expediente: "490 (+91)",
         cuenta: "Grupo Córtex SA",
-        etiquetas: [{
-            text: 'ISO9000'
-        },
-        {
-            text: 'EF2021'
-        }
+        etiquetas:  [
+            'ISO9000','EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -282,6 +268,10 @@ class ListDocu extends Component {
         super(props);
 
         this.state = {
+            sessionData: {
+                etiqueta: [],
+
+            },
             nameError: '',
             expedienteError: '',
             documentError: '',
@@ -388,11 +378,34 @@ class ListDocu extends Component {
             newFile: null,
             newFileName: '',
         };
+
+        this.addChip = this.addChip.bind(this);
+        this.removeChip = this.removeChip.bind(this);
     }
 
     onFileChange = event => {
         this.setState({ selectedFile: event.target.files[0], selectedFileName: event.target.files[0].name, showFile: true });
     };
+
+    addChip = (value) => {
+        //const { sessionData } = this.state;
+        //sessionData[name].push(value.charAt(0).toUpperCase() + value.slice(1));
+        this.setState({ etiqueta: [...this.state.etiqueta, value] })
+        console.log("Etiquetas", this.state.etiqueta);
+        //this.setState({ sessionData });
+        //console.log("tags", sessionData )
+    };
+    removeChip = (chip, index) => {
+        //const { sessionData } = this.state;
+       // sessionData[name].splice(index, 1);
+        this.setState({ etiqueta: this.state.etiqueta.splice(chip,index, 1) });
+    };
+
+    changeTag = (value) => {
+        this.setState({ newEtiqueta: [...this.state.newEtiqueta, value] })
+        console.log("NuevasTags", this.state.newEtiqueta)
+    }
+
 
     /*onFileUpload = () => {
     
@@ -518,6 +531,12 @@ class ListDocu extends Component {
     modalClosedChangeCategory = () => {
         this.setState({
             showChangeCategory: false
+        })
+    }
+
+    modalClosedChangeType = () => {
+        this.setState({
+            showChangeType: false
         })
     }
 
@@ -669,9 +688,10 @@ class ListDocu extends Component {
 
 
     handleDelete = i => {
-        console.log("test");
         // setTags(tags.filter((tag, index) => index !== i));
-        this.setState(this.state.etiqueta.filter((tag, index) => index !== i))
+        this.setState(this.state.etiqueta.filter((text, index) => index !== i))
+        console.log("test", this.setState(this.state.etiqueta.filter((text, index) => index !== i)));
+
     };
 
     handleAddition = tag => {
@@ -682,6 +702,7 @@ class ListDocu extends Component {
 
     changeTag = tag => {
         this.setState({ newEtiqueta: [...this.state.newEtiqueta, tag] })
+        console.log("NuevasTags", this.state.newEtiqueta)
     }
 
     saveChangeTag = () => {
@@ -911,7 +932,7 @@ class ListDocu extends Component {
 
     render() {
         const { modal, modalScreen, showCategory, showTipo, showCuenta, showFile, showChangeCategory, showChangeType, showChangeVisibilidad, showChangeDescrip, showChangeExpe, showChangeCliente, showChangeDoc, showChangeTag } = this.state;
-        const { filterTable, columns, baseData } = this.state;
+        const { filterTable, columns, baseData, sessionData } = this.state;
 
 
         return (
@@ -938,21 +959,13 @@ class ListDocu extends Component {
                                 </span>
                             </Nav>
 
-                            <Nav className="me-auto">
-                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                    <img src={chat} alt="chat" />
-                                </button>
-                            </Nav>
-
-                            <Nav className="me-auto">
-                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                    <img className="nav-icon" src={bell} alt="bell" />
-                                </button>
-                            </Nav>
+                         
 
                             <div className="container-user">
                                 <div className="avatar">
-                                    <img className="user-css" src={user} alt="user" />
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                <img className="nav-icon" src={bell} alt="bell" />
+                            </button>
                                 </div>
                                 <div className="user-info-nav">
                                     <p className="name-user">Marta Dieguez</p>
@@ -1006,7 +1019,7 @@ class ListDocu extends Component {
 
                             <Col lg="2">
                                 <div className="SelectBusqueda">
-                                    <p className="title-filter">ESTADO</p>
+                                    <p className="title-filter">VISIBILIDAD</p>
                                     <Form.Select onClick={this.handleFilterVisibilidad} className="select-css" aria-label="Default select example">
                                         {
                                             visibilidad.map(item => (
@@ -1198,16 +1211,14 @@ class ListDocu extends Component {
                                             <Col lg="4">
                                                 <Form.Group className="mb-3" controlId="formBasicEtiquetas">
                                                     <Form.Label className="title-filter-modal">Etiquetas</Form.Label>
-                                                    <ReactTags
-                                                        className="newCategory-css"
-                                                        tags={this.state.etiqueta}
-                                                        handleDelete={this.handleDelete}
-                                                        handleAddition={this.handleAddition}
-                                                        handleDrag={this.handleDrag}
-                                                        handleTagClick={this.handleTagClick}
-                                                        inputFieldPosition="bottom"
-                                                        autocomplete
-                                                    />
+                                                    <div className="newCategory-css border">
+                                                        <ChipInput
+                                                            value={this.state.etiqueta}
+                                                            onAdd={value => this.addChip(value)}
+                                                            onDelete={(chip, index) => this.removeChip(chip, index)}
+                                                            newChipKeyCodes={[9, 13, 187, 188]}
+                                                        />
+                                                    </div>
                                                 </Form.Group>
 
                                             </Col>
@@ -1425,7 +1436,7 @@ class ListDocu extends Component {
                                                 centered>
                                                 <Modal.Header>
                                                     <p className="modal-title">Cambiar Expediente</p>
-                                                    <Button className="out-css-header" onClick={this.modalClosedChangeDescrip}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                    <Button className="out-css-header" onClick={this.modalClosedChangeExpe}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
                                                     </Button>
                                                 </Modal.Header>
                                                 <Modal.Body>
@@ -1456,7 +1467,7 @@ class ListDocu extends Component {
                                             centered>
                                             <Modal.Header>
                                                 <p className="modal-title">Seleccione el Cliente</p>
-                                                <Button className="out-css-header" onClick={this.modalClosedChangeType}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
+                                                <Button className="out-css-header" onClick={this.modalClosedChangeCliente}><img className="closed-css-modal" src={closedicon} alt="closedicon" />
                                                 </Button>
                                             </Modal.Header>
                                             <Modal.Body>
@@ -1531,10 +1542,10 @@ class ListDocu extends Component {
                                                 <Form.Group style={{ marginBottom: "8px !important" }} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
-                                                <Button className="redColorModal1" onClick={this.modalChangeTag}>Cambiar</Button>
+                                                <Button className="redColorModal1" style={{position: "absolute", top: "72%"}} onClick={this.modalChangeTag}>Cambiar</Button>
                                                 {
                                                     this.state.etiqueta.map(valor => (
-                                                        <span className="tag-span" key={valor.id}>{valor.text}</span>
+                                                        <span className="tag-span" key={valor}>{valor}</span>
                                                     ))
                                                 }
                                             </Col>
@@ -1549,16 +1560,14 @@ class ListDocu extends Component {
                                             <Modal.Body>
                                                 <Form.Group className="mb-3" controlId="formBasicEtiquetas">
                                                     <Form.Label className="title-filter-modal">Etiquetas</Form.Label>
-                                                    <ReactTags
-                                                        className="newCategory-css"
-                                                        tags={this.state.newEtiqueta}
-                                                        handleDelete={this.handleDelete}
-                                                        handleAddition={this.changeTag}
-                                                        handleDrag={this.handleDrag}
-                                                        handleTagClick={this.handleTagClick}
-                                                        inputFieldPosition="bottom"
-                                                        autocomplete
-                                                    />
+                                                    <div className="newCategory-css border">
+                                                        <ChipInput
+                                                            value={this.state.newEtiqueta}
+                                                            onAdd={value => this.changeTag(value)}
+                                                            onDelete={(chip, index) => this.removeChip(chip, index, "etiqueta")}
+                                                            newChipKeyCodes={[9, 13, 187, 188]}
+                                                        />
+                                                    </div>
                                                 </Form.Group>
 
                                             </Modal.Body>
@@ -1665,12 +1674,12 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group className="mb-3" controlId="formBasicExpediente">
+                                                <Form.Group  controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
                                                 {
                                                     this.state.etiqueta.map(valor => (
-                                                        <span className="tag-span" key={valor.id}>{valor.text}</span>
+                                                        <span className="tag-span" key={valor}>{valor}</span>
                                                     ))
                                                 }
                                             </Col>

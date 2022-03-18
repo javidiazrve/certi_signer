@@ -100,14 +100,13 @@
 }
 
 .uploadButton {
-    margin-top: 20px;
+    margin-top: 38px;
     color: white !important;
     border-color: #ff0b0b !important;
     background: #ff0b0b;
     border-radius: 24px;
 }
 .uploadButton:hover {
-    margin-top: 20px;
     color: white !important;
     border-color: #ff0b0b !important;
     background: #ff0b0b;
