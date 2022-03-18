@@ -145,6 +145,10 @@ body {
   border-radius: 38px 0px 0px 38px;
 }
 
+.side-menu .main-menu .menu-item.active img {
+  filter:  invert(75%) sepia(63%) saturate(7061%) hue-rotate(356deg) brightness(98%) contrast(117%);;
+}
+
 .side-menu .main-menu {
   margin: 10px -4px 10px 88px;
   position: relative;
@@ -272,7 +276,7 @@ body {
 }
 
 .container {
-  margin-left: 330px;
+  margin-left: 283px;
   transition: margin-left 0.2s ease-in;
   padding-left: 50px;
   /*padding-right: 50px;*/

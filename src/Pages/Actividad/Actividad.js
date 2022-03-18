@@ -178,7 +178,6 @@ export default function Actividad() {
                             </span>
                         </Nav>
 
-                    
 
                         <div className="container-user">
                             <div className="avatar">

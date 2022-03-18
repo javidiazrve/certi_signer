@@ -5,8 +5,13 @@ import menuIcon from "../assets/ic_menu.svg";
 import doc from "../assets/doc.svg";
 import actividad from "../assets/actividad.svg";
 import actividadwhite from "../assets/actividadwhite.svg";
+import docwhite from "../assets/docwhite.svg";
+import userwhite from "../assets/userwhite.svg";
+
+
 import user from "../assets/user.svg";
 
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -15,7 +20,7 @@ import MenuItem from "./MenuItem";
 
 const menuItems = [
   {
-    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc, iconClassNameWhite: actividadwhite,
+    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc, iconClassNameWhite: docwhite,
   },
   {
     name: "Actividad", exact: true, to: '/actividad', iconClassName: actividad, iconClassNameWhite: actividadwhite,
@@ -24,16 +29,19 @@ const menuItems = [
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },*/
   {
-    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user, iconClassNameWhite: actividadwhite,
+    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user, iconClassNameWhite: userwhite,
   }
 ]
 
 const SideMenu = (props) => {
   const [inactive, setInative] = useState(false);
+  
 
   useEffect(() => {
     props.onCollapse(inactive);
   }, [inactive]);
+
+
 
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
@@ -62,12 +70,13 @@ const SideMenu = (props) => {
                   exact
                   to={item.to}
                   className={`menu-item`}
-                  activeclassname="active"
                 >
-                      <div className="menu-icon">
-                        <img className="share-icon" src={item.iconClassName} alt="share" />
-                      </div>
-                      <span>{item.name}</span>
+
+                    <div className="menu-icon">
+                      <img className="share-icon" src={item.iconClassNameWhite} alt="share" />
+                    </div>
+
+                  <span>{item.name}</span>
                 </NavLink>
               </li>
             ))

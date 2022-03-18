@@ -1,13 +1,16 @@
 import React, { Component, useState } from 'react';
 import { Table, Tag, Input } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink, Link } from "react-router-dom";
 import { faListCheck, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import ChipInput from 'material-ui-chip-input';
+import axios from "axios";
+
 
 import '../../Components/Navbar/NavbarHeader.css';
 import user from "../../assets/user.png";
-import chat from "../../assets/notification.svg";
+import clearimg from "../../assets/clearimg.svg";
 import bell from "../../assets/bell.svg";
 import info from "../../assets/info.svg";
 import pdf from "../../assets/pdf.svg";
@@ -150,7 +153,7 @@ const data = [
             'ISO9000','EF2021'
         ],
         documento: "Memoria de calidades",
-        doctype: <img src={pdf} alt="pdf" />,
+        doctype: <img src={clearimg} alt="clearimg" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso público mediante QR",
         fecha: "2022-01-12",
@@ -406,6 +409,17 @@ class ListDocu extends Component {
         console.log("NuevasTags", this.state.newEtiqueta)
     }
 
+    onFileUpload = () => {
+        const formData = new FormData();
+        formData.append("myFile", this.state.selectedFile);
+    
+        console.log(this.state.selectedFile);
+        axios.post("http://localhost:3000/api/uploadfile", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }); //I need to change this line
+      };
 
     /*onFileUpload = () => {
     
@@ -554,6 +568,7 @@ class ListDocu extends Component {
     };
 
     handleSubmitStep2 = () => {
+        this. onFileUpload();
         this.setState(
             {
                 modalScreen: 2,
@@ -634,6 +649,9 @@ class ListDocu extends Component {
 
     onAddStudent = () => {
         const randomNumber = parseInt(Math.random() * 1000);
+
+        let testUrl = `/build/${this.state.selectedFileName}`
+
         let newStudent = {
             key: randomNumber,
             categoria: this.state.categorias,
@@ -645,7 +663,7 @@ class ListDocu extends Component {
             fecha: "12/01/2022",
             visibilidad: this.state.visibilidad,
             acessdoc: this.state.visibilidad === 'Acceso público mediante QR' ? <img src={unlock} /> : <img src={lock} />,
-            doctype: this.state.tipo === 'Certificado diplomado' ? <img src={pdf} /> : <img src={pdf} />,
+            doctype: this.state.tipo === 'Certificado diplomado' ? <Link to={testUrl} target="_blank" download><img src={pdf} />Download</Link> : <Link to={testUrl} target="_blank" download><img src={clearimg} />Download</Link>,
             visto: 0
         };
 
