@@ -11,11 +11,6 @@ import userwhite from "../assets/userwhite.svg";
 
 import user from "../assets/user.svg";
 
-import { useLocation } from 'react-router-dom';
-
-
-
-import MenuItem from "./MenuItem";
 
 
 const menuItems = [

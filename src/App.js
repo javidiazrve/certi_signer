@@ -3,6 +3,7 @@ import SideMenu from "./Components/SideMenu";
 import ListDocu from "./Pages/Documentation/ListDocu";
 import Actividad from "./Pages/Actividad/Actividad";
 import Usuario from "./Pages/Usuarios/Usuario";
+import Login from "./Pages/Login/Login";
 
 
 import {
@@ -25,6 +26,7 @@ function App() {
       }} />
       <div className={`containerTwo ${inactive ? "inactive" : ""}`}>
         <Routes>
+          <Route exact path={"/login"} element={<Login/>} />
           <Route exact path={"/"} element={<ListDocu />} />
           <Route exact path={"/documentacion"}  element={<ListDocu />} />
           <Route exact path={"/actividad"}  element={<Actividad />} />

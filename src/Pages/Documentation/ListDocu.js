@@ -9,9 +9,9 @@ import axios from "axios";
 
 
 import '../../Components/Navbar/NavbarHeader.css';
-import user from "../../assets/user.png";
 import clearimg from "../../assets/clearimg.svg";
 import bell from "../../assets/bell.svg";
+import circleupload from "../../assets/circleupload.svg";
 import info from "../../assets/info.svg";
 import pdf from "../../assets/pdf.svg";
 import lock from "../../assets/lock.svg";
@@ -119,7 +119,7 @@ const data = [
         expediente: "PRT69786",
         cuenta: "Grupo Aliseda SA",
         etiquetas: [
-            'ISO9000','EF2021'
+            'ISO9000', 'EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -135,7 +135,7 @@ const data = [
         expediente: "PRT78698",
         cuenta: "Industrias YGUS SL",
         etiquetas: [
-            'ISO9000','EF2021'
+            'ISO9000', 'EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -150,8 +150,8 @@ const data = [
         tipo: "Folleto técnico",
         expediente: "PRT78697",
         cuenta: "Solis Ingeniería SA",
-        etiquetas:  [
-            'ISO9000','EF2021'
+        etiquetas: [
+            'ISO9000', 'EF2021'
         ],
         documento: "Memoria de calidades",
         doctype: <img src={clearimg} alt="clearimg" />,
@@ -166,8 +166,8 @@ const data = [
         tipo: "Certificado diploma",
         expediente: "490 (+91)",
         cuenta: "Grupo Córtex SA",
-        etiquetas:  [
-            'ISO9000','EF2021'
+        etiquetas: [
+            'ISO9000', 'EF2021'
         ],
         documento: "certificado emitido",
         doctype: <img src={pdf} alt="pdf" />,
@@ -401,8 +401,8 @@ class ListDocu extends Component {
     };
     removeChip = (chip, index) => {
         //const { sessionData } = this.state;
-       // sessionData[name].splice(index, 1);
-        this.setState({ etiqueta: this.state.etiqueta.splice(chip,index, 1) });
+        // sessionData[name].splice(index, 1);
+        this.setState({ etiqueta: this.state.etiqueta.splice(chip, index, 1) });
     };
 
     changeTag = (value) => {
@@ -413,14 +413,14 @@ class ListDocu extends Component {
     onFileUpload = () => {
         const formData = new FormData();
         formData.append("myFile", this.state.selectedFile);
-    
+
         console.log(this.state.selectedFile);
         axios.post("http://localhost:3000/api/uploadfile", formData, {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
+            headers: {
+                "content-type": "multipart/form-data",
+            },
         }); //I need to change this line
-      };
+    };
 
     /*onFileUpload = () => {
     
@@ -569,7 +569,7 @@ class ListDocu extends Component {
     };
 
     handleSubmitStep2 = () => {
-        this. onFileUpload();
+        this.onFileUpload();
         this.setState(
             {
                 modalScreen: 2,
@@ -978,13 +978,13 @@ class ListDocu extends Component {
                                 </span>
                             </Nav>
 
-                         
+
 
                             <div className="container-user">
                                 <div className="avatar">
-                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={bell} alt="bell" />
-                            </button>
+                                    <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                        <img className="nav-icon" src={bell} alt="bell" />
+                                    </button>
                                 </div>
                                 <div className="user-info-nav">
                                     <p className="name-user">Marta Dieguez</p>
@@ -1053,7 +1053,8 @@ class ListDocu extends Component {
 
                         <Table className="table table-fixed" columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
                     </div>
-                    <Button className="uploadButton" style={{marginLeft: "17px"}} onClick={this.modalOpen}>Cargar nuevo documento</Button>
+                    <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img className="nav-icon" src={circleupload} alt="circleupload" />
+                    </Button>
                     <Modal show={modal} size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered>
@@ -1561,7 +1562,7 @@ class ListDocu extends Component {
                                                 <Form.Group style={{ marginBottom: "8px !important" }} controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
-                                                <Button className="redColorModal1" style={{position: "absolute", top: "72%"}} onClick={this.modalChangeTag}>Cambiar</Button>
+                                                <Button className="redColorModal1" style={{ position: "absolute", top: "72%" }} onClick={this.modalChangeTag}>Cambiar</Button>
                                                 {
                                                     this.state.etiqueta.map(valor => (
                                                         <span className="tag-span" key={valor}>{valor}</span>
@@ -1693,7 +1694,7 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="4">
-                                                <Form.Group  controlId="formBasicExpediente">
+                                                <Form.Group controlId="formBasicExpediente">
                                                     <Form.Label className="title-filter-modal">Etiquetas:</Form.Label>
                                                 </Form.Group>
                                                 {
