@@ -73,7 +73,7 @@ const SideMenu = (props) => {
                 >
 
                     <div className="menu-icon">
-                      <img className="share-icon" src={item.iconClassNameWhite} alt="share" />
+                      <img className="share-icon2" src={item.iconClassNameWhite} alt="share" />
                     </div>
 
                   <span>{item.name}</span>

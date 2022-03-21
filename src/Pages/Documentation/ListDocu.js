@@ -30,6 +30,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
 // Css
 import "./ListDocu.css"
+import { render } from '@testing-library/react';
 
 const columns = [
     {
@@ -90,7 +91,7 @@ const columns = [
     {
         title: '',
         dataIndex: 'doctype',
-        key: 'doctype'
+        key: 'doctype',
     },
     {
         title: '',
@@ -124,7 +125,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso privado QR con contraseña",
-        fecha: "2022-01-22",
+        fecha: "22-01-2022",
         visto: "15",
     },
     {
@@ -140,7 +141,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={unlock} alt="unlock" />,
         estado: "Acceso público mediante QR",
-        fecha: "2022-01-15",
+        fecha: "15-01-2022",
         visto: "15"
     },
     {
@@ -156,7 +157,7 @@ const data = [
         doctype: <img src={clearimg} alt="clearimg" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso público mediante QR",
-        fecha: "2022-01-12",
+        fecha: "01-12-2022",
         visto: "0"
     },
     {
@@ -172,7 +173,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso público mediante QR",
-        fecha: "2022-01-13",
+        fecha: "13-01-2022",
         visto: "112"
     }
 ];
@@ -994,11 +995,11 @@ class ListDocu extends Component {
                     </Navbar>
                     <div className="table-responsive">
                         <Row>
-                            <Col lg="1">
+                            <Col lg="4" className=".d-none .d-sm-block">
 
                             </Col>
 
-                            <Col lg="3">
+                            <Col xs="12" lg="2">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">CATEGORÍA</p>
                                     <Form.Select onClick={this.handleFilterCategory} className="select-css" aria-label="Default select example">
@@ -1011,7 +1012,7 @@ class ListDocu extends Component {
                                 </div>
                             </Col>
 
-                            <Col lg="3">
+                            <Col xs="12" lg="2">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">TIPO</p>
                                     <Form.Select onClick={this.handleFilterType} className="select-css" aria-label="Default select example">
@@ -1024,7 +1025,7 @@ class ListDocu extends Component {
                                 </div>
                             </Col>
 
-                            <Col lg="3">
+                            <Col xs="12" lg="2">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">FECHA DE CARGA</p>
 
@@ -1035,7 +1036,7 @@ class ListDocu extends Component {
                                 </div>
                             </Col>
 
-                            <Col lg="2">
+                            <Col xs="12" lg="2">
                                 <div className="SelectBusqueda">
                                     <p className="title-filter">VISIBILIDAD</p>
                                     <Form.Select onClick={this.handleFilterVisibilidad} className="select-css" aria-label="Default select example">
@@ -1050,9 +1051,9 @@ class ListDocu extends Component {
 
                         </Row>
 
-                        <Table columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
+                        <Table className="table table-fixed" columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
                     </div>
-                    <Button className="uploadButton" onClick={this.modalOpen}>Cargar nuevo documento</Button>
+                    <Button className="uploadButton" style={{marginLeft: "17px"}} onClick={this.modalOpen}>Cargar nuevo documento</Button>
                     <Modal show={modal} size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered>

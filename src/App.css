@@ -16,7 +16,7 @@ li {
   list-style: none;
 }
 body {
-  background-color: #f2f2f2 !important;
+  background-color: #fff !important;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -88,8 +88,8 @@ body {
   color: black;
   font-size: 30px;
   position: absolute;
-  top:  32%;
-  left: 110%;
+  top: 32%;
+  left: 86%;
   right: 0;
   transform: translateY(-50%);
   cursor: pointer;
@@ -97,6 +97,13 @@ body {
 
 .side-menu.inactive .top-section .toggle-menu-btn {
   right: -50px;
+  position: absolute;
+  top: 123%;
+  left: 37%;
+}
+.side-menu.inactive .top-section .logo img {
+  max-width: 78%;
+  max-height: 100%;
 }
 
 .side-menu .search-controller {
@@ -144,9 +151,12 @@ body {
   color: #292929;
   border-radius: 38px 0px 0px 38px;
 }
-
+.share-icon2 {
+  width: 20.66px;
+  margin-top: 4px;
+}
 .side-menu .main-menu .menu-item.active img {
-  filter:  invert(75%) sepia(63%) saturate(7061%) hue-rotate(356deg) brightness(98%) contrast(117%);;
+  filter: invert(75%) sepia(63%) saturate(7061%) hue-rotate(356deg) brightness(98%) contrast(117%);
 }
 
 .side-menu .main-menu {
@@ -276,7 +286,7 @@ body {
 }
 
 .container {
-  margin-left: 283px;
+  margin-left: 252px;
   transition: margin-left 0.2s ease-in;
   padding-left: 50px;
   /*padding-right: 50px;*/
@@ -288,5 +298,9 @@ body {
 }
 
 .containerTwo.inactive {
-  margin-left: -250px;
+  margin-left: -208px;
+}
+
+.hii{
+  padding: 0px !important
 }

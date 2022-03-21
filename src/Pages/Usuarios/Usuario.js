@@ -172,7 +172,7 @@ export default function Usuario() {
                 <div className="table-responsive">
                     <Table columns={columns} dataSource={dataSource} />
                 </div>
-                <Button className="uploadButton">Crear nuevo usuario</Button>
+                <Button className="uploadUser">Crear nuevo usuario</Button>
             </Container>
         </>
     );
