@@ -1,19 +1,20 @@
-.ant-input{
-    background: #E3E3E3;
+.ant-input {
+    background: #e3e3e3;
     border-radius: 82px;
     padding: 10px;
+    padding-left: 20px;
     margin-left: 50px;
     border: 0px;
     width: 300px;
 }
-.table-responsive{
+.table-responsive {
     overflow-x: hidden !important;
     /*padding-right: 40px;*/
 }
-.ant-input-search-button{
+.ant-input-search-button {
     display: none;
 }
-.ms-n5555{
+.ms-n5555 {
     margin-top: 3px;
     margin-left: -47px;
 }
@@ -70,6 +71,11 @@
     box-sizing: border-box;
     border-radius: 46px;
 }
+.select-css-clientes {
+    border: 1px solid #f4f4f4;
+    box-sizing: border-box;
+    /* border-radius: 46px; */
+}
 .btnBuscar {
     height: 34px;
     width: 32px;
@@ -99,20 +105,43 @@
     margin-top: 40px;
 }
 
+.uploadButtonModal {
+    margin-top: 28px;
+    color: white !important;
+    border-color: #ff0b0b !important;
+    background: #ff0b0b;
+    border-radius: 24px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+    /* text-align: center; */
+}
+
 .uploadButton {
     margin-top: 38px;
     color: white !important;
     border-color: #ff0b0b !important;
     background: #ff0b0b;
     border-radius: 24px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
 }
 .uploadUser {
-    margin-top: 0px;
+    margin-top: 38px;
     color: white !important;
     border-color: #ff0b0b !important;
     background: #ff0b0b;
     border-radius: 24px;
-    margin-left: 34px !important;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
 }
 .uploadUser:hover {
     color: white !important;
@@ -164,23 +193,23 @@
     font-weight: 600 !important;
     cursor: pointer;
 }
-.ant-pagination-next::before{
+.ant-pagination-next::before {
     content: "Next" !important;
     padding-right: 20px !important;
     color: #102973 !important;
     font-weight: 600 !important;
     cursor: pointer;
 }
-.ant-pagination-item-link{
-    border:0px !important;
+.ant-pagination-item-link {
+    border: 0px !important;
     background: transparent !important;
 }
 
-.ant-pagination-prev{
+.ant-pagination-prev {
     margin-right: 50px;
 }
 
-.ant-pagination-next{
+.ant-pagination-next {
     margin-left: 50px;
 }
 
@@ -199,11 +228,11 @@
     margin-top: -8px;
     position: relative !important;
 }
-.anticon-left{
+.anticon-left {
     padding-left: 10px !important;
-    color: #102973 !important
+    color: #102973 !important;
 }
-.anticon-right{
+.anticon-right {
     padding-right: 10px !important;
     color: #102973 !important;
 }
@@ -223,7 +252,7 @@
     font-size: 18px !important;
     line-height: 27px !important;
 }
-.closed-css{
+.closed-css {
     width: 28.86px;
     height: 28.67px;
 }
@@ -238,3 +267,62 @@
     border: transparent;
     font-weight: 600;
 }
+
+.playerProfilePic_home_tile {
+    width: 80px;
+}
+
+.uploadLogotipo {
+    margin: 0 auto;
+    color: white !important;
+    border-color: #ff0b0b !important;
+    background: #102973;
+    border-radius: 24px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    height: 41px;
+}
+
+.previewProfilePic {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}
+
+.out-modal{
+    margin: 0 auto;
+    color: #9F9F9F;
+    border-color: #F4F4F4 !important;
+    /* background: #102973; */
+    border-radius: 24px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    background: #F4F4F4;
+    border-radius: 54px;
+    height: 52px;
+}
+
+.out-modal:hover{
+    border: 0px;
+    background-color: transparent;
+    color: #9F9F9F;
+
+}
+
+.Content{
+    padding: 40px;
+}
+
+
+.form-select {
+    background-image: url("../../assets/select.svg");
+}
+
+.ant-table-tbody {
+    font-size: 14px;
+}
+

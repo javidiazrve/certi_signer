@@ -23,7 +23,6 @@ import closedicon from "../../assets/boton-x.png";
 import share from "../../assets/share.png";
 import qr from "../../assets/qr.svg";
 import './Modal.css'
-import { WithContext as ReactTags } from 'react-tag-input';
 
 
 
@@ -1053,7 +1052,7 @@ class ListDocu extends Component {
 
                         <Table className="table table-fixed" columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
                     </div>
-                    <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img className="nav-icon" src={circleupload} alt="circleupload" />
+                    <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img  src={circleupload} alt="circleupload" />
                     </Button>
                     <Modal show={modal} size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
@@ -1244,7 +1243,7 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="8">
-                                                <label htmlFor="files" className="uploadButton btn">Seleccionar el documento a cargar</label>
+                                                <label htmlFor="files" className="uploadButtonModal btn" style={{width: "350px"}}>Seleccionar el documento a cargar <img  src={circleupload} alt="circleupload" /></label>
                                                 <input id="files" style={{ visibility: "hidden" }} type="file" onChange={this.onFileChange} />
                                             </Col>
                                             <span className="text-validate" style={{ textAlign: "center" }}>{this.state.documentError}</span>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from "react-router-dom";
-import doc from "../assets/doc.svg";
+import { NavLink} from "react-router-dom";
+import doc from "../../assets/doc.svg";
 
 
-const MenuItem = (props) => {
+const MenuItemAdmin = (props) => {
 
   const { name, iconClassName, to, exact } = props;
   const [expand, setExpand, imgDummy] = useState(false);
@@ -40,4 +40,4 @@ return (
 );
 }
 
-export default MenuItem
+export default MenuItemAdmin

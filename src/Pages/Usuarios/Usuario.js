@@ -4,8 +4,8 @@ import { Container, Row, Col, Form, Navbar, Nav, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
-import user from "../../assets/user.png";
-import chat from "../../assets/notification.svg";
+import circleupload from "../../assets/circleupload.svg";
+
 import bell from "../../assets/bell.svg";
 // Css
 import "../Documentation/ListDocu.css"
@@ -172,7 +172,7 @@ export default function Usuario() {
                 <div className="table-responsive">
                     <Table columns={columns} dataSource={dataSource} />
                 </div>
-                <Button className="uploadUser">Crear nuevo usuario</Button>
+                <Button className="uploadUser">Crear nuevo usuario <img  src={circleupload} alt="circleupload" /></Button>
             </Container>
         </>
     );

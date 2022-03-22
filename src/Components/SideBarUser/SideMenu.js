@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from "react-router-dom";
-import logo from "../assets/logo/LogoCerti.png";
-import menuIcon from "../assets/ic_menu.svg";
-import doc from "../assets/doc.svg";
-import actividad from "../assets/actividad.svg";
-import actividadwhite from "../assets/actividadwhite.svg";
-import docwhite from "../assets/docwhite.svg";
-import userwhite from "../assets/userwhite.svg";
-
-
-import user from "../assets/user.svg";
+import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo/LogoCerti.png";
+import menuIcon from "../../assets/ic_menu.svg";
+import doc from "../../assets/doc.svg";
+import actividad from "../../assets/actividad.svg";
+import actividadwhite from "../../assets/actividadwhite.svg";
+import docwhite from "../../assets/docwhite.svg";
+import userwhite from "../../assets/userwhite.svg";
+import user from "../../assets/user.svg";
 
 
 
