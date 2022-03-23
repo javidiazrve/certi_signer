@@ -19,7 +19,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "18",
         consumo: "180 €",
-        total: "Certificado emitido Expediente: PRT87965",
+        total: "380 €",
         estado: "Pagado",
         pdf: "Descargar PDF"
     },
@@ -30,7 +30,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "12",
         consumo: "225 €",
-        total: "Memoria de calidades Expediente: PTR5656",
+        total: "425 €",
         estado: "Pagado",
         pdf: "Descargar PDF"
     },
@@ -41,7 +41,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "25",
         consumo: "310 €",
-        total: "Memoria de calidades Expediente: PTR5656",
+        total: "510 €",
         estado: "Pendiente",
         pdf: "Descargar PDF"
     },
@@ -52,7 +52,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "26",
         consumo: "305 €",
-        total: "Memoria de calidades Expediente: PTR5656",
+        total: "505 €",
         estado: "Pagado",
         pdf: "Descargar PDF"
     },
@@ -63,7 +63,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "21",
         consumo: "250 €",
-        total: "Memoria de calidades Expediente: PTR5656",
+        total: "550 €",
         estado: "Pagado",
         pdf: "Descargar PDF"
     },
@@ -74,7 +74,7 @@ const data = [
         mensualidad: '200 €',
         consumon: "22",
         consumo: "225 €",
-        total: "Memoria de calidades Expediente: PTR5656",
+        total: "425 €",
         estado: "Pagado",
         pdf: "Descargar PDF"
     },
@@ -248,19 +248,15 @@ export default function ActividadAdmin() {
                             <div className="SelectBusqueda">
                                 <p className="title-filter">Fecha</p>
 
-                                <Form.Select  className="select-css" aria-label="Default select example">
-                                    {
-                                        estado.map(actividad => (
-                                            <option key={actividad.id} value={actividad.name} >{actividad.name}</option>
-                                        ))
-                                    }
-                                </Form.Select>
+                                <Form.Group controlId="dob">
+                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                </Form.Group>
 
                             </div>
                         </Col>
 
                     </Row>
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns} scroll={{ x: 'max-content' }} dataSource={dataSource} />
                 </div>
                 <Button className="uploadUser">Exportar resultados <img src={circleupload} alt="circleupload" /></Button>
 

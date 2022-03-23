@@ -78,7 +78,7 @@ const data = [
         cliente: "Asesoría integral SL",
         actividad: 'Documento privado, intento de acceso fallido',
         detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
-        consumo:  "0,90 €",
+        consumo: "0,90 €",
         documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
     },
@@ -206,7 +206,7 @@ export default function ActividadAdmin() {
                                     const currValue = e.target.value;
                                     setValue(currValue);
                                     const filteredData = data.filter(entry =>
-                                        entry.cliente.includes(currValue)
+                                        entry.cliente.includes(currValue) || entry.actividad.includes(currValue) || entry.detalle.includes(currValue) || entry.documento.includes(currValue) || entry.usuario.includes(currValue)
                                     );
                                     setDataSource(filteredData);
                                 }}
@@ -264,19 +264,15 @@ export default function ActividadAdmin() {
                             <div className="SelectBusqueda">
                                 <p className="title-filter">Fecha</p>
 
-                                <Form.Select  className="select-css" aria-label="Default select example">
-                                    {
-                                        actividad.map(actividad => (
-                                            <option key={actividad.id} value={actividad.actividad} >{actividad.actividad}</option>
-                                        ))
-                                    }
-                                </Form.Select>
+                                    <Form.Group controlId="dob">
+                                        <Form.Control  className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    </Form.Group>
 
                             </div>
                         </Col>
 
                     </Row>
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns}  dataSource={dataSource} />
                 </div>
                 <Button className="uploadUser">Exportar resultados <img src={circleupload} alt="circleupload" /></Button>
 

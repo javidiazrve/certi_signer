@@ -16,7 +16,7 @@ const data = [
         key: '1',
         fecha: '02/01/2022 13:43',
         cliente: "Asesoría integral SL",
-        usuario: 'Julio Marín',
+        usuario: 'Pedro Marín',
         documento: "Certificado emitido Expediente: PRT87965",
         detalle: " GLKJ67LKJTGHGHLKJ5L6KJLKJGFHTGFLHKJ",
         red: "Ethereum",
@@ -78,7 +78,7 @@ const data = [
         cliente: "Asesoría integral SL",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
-        detalle:  " GLKJ67LKJTGHGHLKJ5L6KJLKJGFHTGFLHKJ",
+        detalle: " GLKJ67LKJTGHGHLKJ5L6KJLKJGFHTGFLHKJ",
         red: "Ethereum",
         consumo: "0,90 €"
     },
@@ -199,7 +199,7 @@ export default function Consumo() {
                                     const currValue = e.target.value;
                                     setValue(currValue);
                                     const filteredData = data.filter(entry =>
-                                        entry.cliente.includes(currValue)
+                                        entry.cliente.includes(currValue) || entry.usuario.includes(currValue)
                                     );
                                     setDataSource(filteredData);
                                 }}
@@ -257,19 +257,15 @@ export default function Consumo() {
                             <div className="SelectBusqueda">
                                 <p className="title-filter">Fecha</p>
 
-                                <Form.Select onClick={handleActivy} className="select-css" aria-label="Default select example">
-                                    {
-                                        actividad.map(actividad => (
-                                            <option key={actividad.id} value={actividad.actividad} >{actividad.actividad}</option>
-                                        ))
-                                    }
-                                </Form.Select>
+                                <Form.Group controlId="dob">
+                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                </Form.Group>
 
                             </div>
                         </Col>
 
                     </Row>
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns} scroll={{ x: 'max-content' }} dataSource={dataSource} />
                 </div>
                 <Button className="uploadUser">Exportar resultados <img src={circleupload} alt="circleupload" /></Button>
 

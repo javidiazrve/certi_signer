@@ -40,6 +40,7 @@
 .user-info-nav {
     margin-left: 20px;
     align-self: center;
+    padding-right: 20px;
 }
 .name-user {
     font-weight: 600;
@@ -143,6 +144,7 @@
     justify-content: center;
     align-items: center;
     height: 52px;
+    margin-left: 20px;
 }
 .uploadUser:hover {
     color: white !important;
@@ -198,14 +200,14 @@
 }
 
 .ant-pagination-prev::after {
-    content: "Previous" !important;
+    content: "Atrás" !important;
     padding-left: 20px !important;
     color: #102973 !important;
     font-weight: 600 !important;
     cursor: pointer;
 }
 .ant-pagination-next::before {
-    content: "Next" !important;
+    content: "Siguiente" !important;
     padding-right: 20px !important;
     color: #102973 !important;
     font-weight: 600 !important;

@@ -109,9 +109,9 @@ const actividad = [
   {
     actividad: "Mostrar solo clientes Activos", id: 1
   },
-  {
+  /*{
     actividad: "Visualización mediante QR público", id: 2
-  },
+  },*/
 ]
 
 
@@ -205,7 +205,7 @@ export default function Clientes() {
 
             <Col lg="12" style={{ display: "flex", justifyContent: "end" }}>
               <div className="SelectBusqueda">
-                <p className="title-filter">TIPO DE ACTIVIDAD</p>
+                <p className="title-filter">ESTADO</p>
 
                 <Form.Select onClick={handleActivy} className="select-css" aria-label="Default select example">
                   {
@@ -219,7 +219,7 @@ export default function Clientes() {
             </Col>
 
           </Row>
-          <Table columns={columns} dataSource={dataSource} />
+          <Table columns={columns} scroll={{ x: 'max-content' }} dataSource={dataSource} />
         </div>
         <Button className="uploadUser" onClick={handleModal}>Crear nueva cuenta cliente <img src={circleupload} alt="circleupload" /></Button>
         <Modal show={modalform} size="lg"

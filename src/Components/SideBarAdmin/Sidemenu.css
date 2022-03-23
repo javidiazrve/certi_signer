@@ -89,7 +89,7 @@
 }
 
 .side-menuAdmin .main-menu .menu-item.active {
-    background: #f2f2f2;
+    background: #ffff;
     color: #292929;
     border-radius: 38px 0px 0px 38px;
 }
