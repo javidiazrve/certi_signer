@@ -6,6 +6,10 @@ import Actividad from "./Pages/Actividad/Actividad";
 import Usuario from "./Pages/Usuarios/Usuario";
 import Login from "./Pages/Login/Login";
 
+// Metamask
+import Loginmeta from "./Pages/Loginmeta/Loginmeta";
+
+
 // ADM interface
 import Clientes from "./Pages/AdminInterface/Clientes";
 import Consumo from "./Pages/AdminInterface/Consumo";
@@ -30,7 +34,7 @@ function App() {
   return <div className="App">
     <Router>
 
-      {window.location.pathname === "/" || window.location.pathname === "/documentacion" || window.location.pathname === "/actividad" || window.location.pathname === "/usuario" ? (
+      {window.location.pathname === "/documentacion" || window.location.pathname === "/actividad" || window.location.pathname === "/usuario" ? (
         <SideMenu onCollapse={(inactive) => {
           console.log(inactive);
           setInative(inactive);
@@ -46,8 +50,8 @@ function App() {
 
       <div className={`containerTwo ${inactive ? "inactive" : ""}`}>
         <Routes>
+          <Route exact path={"/"} element={<Loginmeta/>} />
           <Route exact path={"/login"} element={<Login />} />
-          <Route exact path={"/"} element={<ListDocu />} />
           <Route exact path={"/documentacion"} element={<ListDocu />} />
           <Route exact path={"/actividad"} element={<Actividad />} />
           <Route exact path={"/usuario"} element={<Usuario />} />
