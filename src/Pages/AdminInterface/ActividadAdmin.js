@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Table, Input } from 'antd';
-import { Container, Row, Col, Form, Navbar, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Form, Navbar, Nav, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
+import circleupload from "../../assets/circleupload.svg";
+
+
 import bell from "../../assets/bell.svg";
 // Css
 import "../Documentation/ListDocu.css"
@@ -11,60 +14,74 @@ import "../Documentation/ListDocu.css"
 const data = [
     {
         key: '1',
-        fecha: '02/01/2022 - 13:43',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
+        fecha: '02/01/2022 13:43',
+        cliente: "Asesoría integral SL",
+        actividad: 'Visualización mediante QR público',
+        detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
+        consumo: "0,98 €",
         documento: "Certificado emitido Expediente: PRT87965",
         usuario: "Usuario anónimo"
     },
     {
         key: '2',
-        fecha: '15/01/2022 - 15:19',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90',
+        fecha: '15/01/2022 15:19',
+        cliente: "ASANA Certificador Industrial SA",
+        actividad: 'Visualización mediante QR público',
+        detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90",
+        consumo: "0,86 €",
         documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
     },
     {
         key: '3',
-        fecha: '12/01/2022 - 11:09',
-        actividad: "Visualización mediante QR público",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
+        fecha: '12/01/2022 11:09',
+        cliente: "Asesoría integral SL",
+        actividad: 'Visualización mediante QR público',
+        detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
+        consumo: "0,98 €",
         documento: "Memoria de calidades Expediente: PTR5656",
-        usuario: "Usuario anónimo"
+        usuario: "Julio Marín"
     },
     {
         key: '4',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Modificación de metadatos asociados",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado',
+        fecha: '11/01/2022 08:09',
+        cliente: "ASANA Certificador Industrial SA",
+        actividad: 'Modificación de metadatos asociados',
+        detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado",
+        consumo: "0,90 €",
         documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Julio Marín"
     },
     {
         key: '5',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Modificación de metadatos asociados",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR',
+        fecha: '11/01/2022 08:09',
+        cliente: "Asesoría integral SL",
+        actividad: 'Modificación de metadatos asociados',
+        detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR",
+        consumo: "0,97 €",
         documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Julio Marín"
     },
     {
         key: '6',
-        fecha: '11/01/2022 - 08:09',
-        actividad: "Nuevo documento creado",
-        detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR',
-        documento: "Certificado emitido Expediente: PRT87965",
+        fecha: '12/01/2022 11:09',
+        cliente: "ASANA Certificador Industrial SA",
+        actividad: 'Nuevo documento creado',
+        detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR",
+        consumo: "0,91 €",
+        documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Julio Marín"
     },
     {
         key: '7',
-        fecha: '10/01/2022 - 15:19',
-        actividad: "Documento privado, intento de acceso fallido",
-        detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
-        documento: "Certificado emitido Expediente: PRT87965",
+        fecha: '10/01/2022 15:19',
+        cliente: "Asesoría integral SL",
+        actividad: 'Documento privado, intento de acceso fallido',
+        detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
+        consumo: "0,90 €",
+        documento: "Memoria de calidades Expediente: PTR5656",
         usuario: "Usuario anónimo"
-    }
+    },
 ];
 
 const columns = [
@@ -74,30 +91,53 @@ const columns = [
         key: 'fecha',
     },
     {
+        title: 'Cliente',
+        dataIndex: 'cliente',
+        key: 'cliente',
+    },
+    {
         title: 'Actividad',
         dataIndex: 'actividad',
         key: 'actividad',
     },
     {
         title: 'Detalles',
-        dataIndex: 'detalles',
-        key: 'detalles',
+        key: 'detalle',
+        dataIndex: 'detalle',
+    },
+    {
+        title: 'Consumo',
+        dataIndex: 'consumo',
+        key: 'consumo',
     },
     {
         title: 'Documento',
         dataIndex: 'documento',
         key: 'documento',
+        render: text => <p style={{ textAlign: "left", marginBottom: "0", color: "#102973", textDecoration: "underline" }} >{text}</p>,
     },
     {
         title: 'Usuario',
-        key: 'usuario',
         dataIndex: 'usuario',
+        key: 'usuario',
     },
 ];
 
+const clientes = [
+    {
+        name: "Todos los clientes", id: 0
+    },
+    {
+        name: "Asesoría integral SL", id: 1
+    },
+    {
+        name: "ASANA Certificador Industrial SA", id: 2
+    }
+]
+
 const actividad = [
     {
-        actividad: "Mostrar todo", id: 1
+        actividad: "Todos los tipos", id: 1
     },
     {
         actividad: "Visualización mediante QR público", id: 2
@@ -110,32 +150,18 @@ const actividad = [
     },
     {
         actividad: "Documento privado, intento de acceso fallido", id: 5
-    }
+    },
 ]
 
 
-export default function Actividad() {
+export default function ActividadAdmin() {
     const [dataSource, setDataSource] = useState(data);
     const [value, setValue] = useState('');
 
-    const FilterByNameInput = (
-        <Input
-            placeholder="Search Name"
-            value={value}
-            onChange={e => {
-                const currValue = e.target.value;
-                setValue(currValue);
-                const filteredData = data.filter(entry =>
-                    entry.documento.includes(currValue)
-                );
-                setDataSource(filteredData);
-            }}
-        />
-    );
 
     const handleActivy = (e) => {
         const currValue = e.target.value;
-        if (currValue === "Mostrar todo") {
+        if (currValue === "Todos los tipos") {
             console.log("Sera que si?");
             return setDataSource(data);
         } else {
@@ -146,6 +172,23 @@ export default function Actividad() {
         }
 
     }
+
+    const handleClient = (e) => {
+        const currValue = e.target.value;
+        if (currValue === "Todos los clientes") {
+            console.log("Sera que si?");
+            return setDataSource(data);
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.cliente.includes(currValue)
+            );
+            setDataSource(filteredData);
+        }
+
+    }
+
+
+
 
 
     return (
@@ -163,7 +206,7 @@ export default function Actividad() {
                                     const currValue = e.target.value;
                                     setValue(currValue);
                                     const filteredData = data.filter(entry =>
-                                        entry.documento.includes(currValue)
+                                        entry.cliente.includes(currValue) || entry.actividad.includes(currValue) || entry.detalle.includes(currValue) || entry.documento.includes(currValue) || entry.usuario.includes(currValue)
                                     );
                                     setDataSource(filteredData);
                                 }}
@@ -177,11 +220,12 @@ export default function Actividad() {
                         </Nav>
 
 
+
                         <div className="container-user">
                             <div className="avatar">
-                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={bell} alt="bell" />
-                            </button>
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                    <img className="nav-icon" src={bell} alt="bell" />
+                                </button>
                             </div>
                             <div className="user-info-nav">
                                 <p className="name-user">Marta Dieguez</p>
@@ -192,26 +236,23 @@ export default function Actividad() {
                 </Navbar>
                 <div className="table-responsive">
                     <Row>
-                        <Col lg="1">
+
+                        <Col lg="4">
 
                         </Col>
 
-                        <Col lg="3">
+                        <Col lg="4">
 
                         </Col>
 
-                        <Col lg="3">
-
-                        </Col>
-
-                        <Col lg="3">
+                        <Col lg="2" style={{ display: "flex", justifyContent: "end" }}>
                             <div className="SelectBusqueda">
                                 <p className="title-filter">TIPO DE ACTIVIDAD</p>
 
                                 <Form.Select onClick={handleActivy} className="select-css" aria-label="Default select example">
                                     {
-                                        actividad.map(actividad => (
-                                            <option key={actividad.id} value={actividad.actividad} >{actividad.actividad}</option>
+                                        actividad.map(item => (
+                                            <option key={item.id} value={item.actividad} >{item.actividad}</option>
                                         ))
                                     }
                                 </Form.Select>
@@ -219,19 +260,22 @@ export default function Actividad() {
                             </div>
                         </Col>
 
-                        <Col lg="2">
+                        <Col lg="2" style={{ display: "flex", justifyContent: "end" }}>
                             <div className="SelectBusqueda">
-                                <p className="title-filter">FECHA DE CARGA</p>
+                                <p className="title-filter">Fecha</p>
 
-                                <Form.Group controlId="dob">
-                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
-                                </Form.Group>
+                                    <Form.Group controlId="dob">
+                                        <Form.Control  className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    </Form.Group>
+
                             </div>
                         </Col>
 
                     </Row>
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns}  dataSource={dataSource} />
                 </div>
+                <Button className="uploadUser">Exportar resultados <img src={circleupload} alt="circleupload" /></Button>
+
             </Container>
         </>
     );

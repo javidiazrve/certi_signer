@@ -1,0 +1,17 @@
+.main-form {
+    text-align: center;
+}
+.form-css {
+    padding: 20px;
+    text-align: center;
+}
+.input-login {
+    border: 1px solid #102973;
+    box-sizing: border-box;
+    border-radius: 46px;
+    background: transparent;
+}
+.login-button {
+    background: #ff0b0b;
+    border-radius: 24px;
+}

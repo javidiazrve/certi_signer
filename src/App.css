@@ -88,8 +88,8 @@ body {
   color: black;
   font-size: 30px;
   position: absolute;
-  top: 42%;
-  left: 110%;
+  top: 32%;
+  left: 86%;
   right: 0;
   transform: translateY(-50%);
   cursor: pointer;
@@ -97,6 +97,13 @@ body {
 
 .side-menu.inactive .top-section .toggle-menu-btn {
   right: -50px;
+  position: absolute;
+  top: 123%;
+  left: 37%;
+}
+.side-menu.inactive .top-section .logo img {
+  max-width: 78%;
+  max-height: 100%;
 }
 
 .side-menu .search-controller {
@@ -140,13 +147,20 @@ body {
   padding-top: 20px;
 }
 .side-menu .main-menu .menu-item.active {
-  background: #f2f2f2;
+  background: #ffff;
   color: #292929;
   border-radius: 38px 0px 0px 38px;
 }
+.share-icon2 {
+  width: 20.66px;
+  margin-top: 4px;
+}
+.side-menu .main-menu .menu-item.active img {
+  filter: invert(75%) sepia(63%) saturate(7061%) hue-rotate(356deg) brightness(98%) contrast(117%);
+}
 
 .side-menu .main-menu {
-  margin: 10px 0px 10px 88px;
+  margin: 10px -4px 10px 88px;
   position: relative;
   max-height: 250px;
   overflow-y: scroll;
@@ -154,7 +168,7 @@ body {
 }
 
 .side-menu .main-menu.inactive {
-  margin: 10px 14px;
+  margin: 10px -4px 0px 19px;
   position: relative;
   max-height: 250px;
   overflow-y: scroll;
@@ -166,7 +180,7 @@ body {
   width: 40px;
   height: 40px;
   font-size: 20px;
-  line-height: 40px;
+  /*line-height: 40px;*/
   text-align: center;
 }
 
@@ -272,11 +286,12 @@ body {
 }
 
 .container {
-  margin-left: 330px;
+  margin-left: 288px;
   transition: margin-left 0.2s ease-in;
-  padding-left: 50px;
-  /*padding-right: 50px;*/
+  /*padding-left: 50px;*/
+  padding-right: 20px;
   box-sizing: border-box;
+  max-width: -webkit-fill-available;
 }
 
 .containerTwo {
@@ -284,5 +299,9 @@ body {
 }
 
 .containerTwo.inactive {
-  margin-left: -250px;
+  margin-left: -208px;
+}
+
+.hii{
+  padding: 0px !important
 }

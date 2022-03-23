@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import logo from "../assets/logo/LogoCerti.png";
-import menuIcon from "../assets/ic_menu.svg";
+import { NavLink } from "react-router-dom";
+import logo from "../../assets/logo/LogoCerti.png";
+import menuIcon from "../../assets/ic_menu.svg";
+import doc from "../../assets/doc.svg";
+import actividad from "../../assets/actividad.svg";
+import actividadwhite from "../../assets/actividadwhite.svg";
+import docwhite from "../../assets/docwhite.svg";
+import userwhite from "../../assets/userwhite.svg";
+import user from "../../assets/user.svg";
 
-import MenuItem from "./MenuItem";
+
 
 const menuItems = [
   {
-    name: "Documentación", exact: true, to: '/documentacion', iconClassName: 'bi bi-speedometer2'
+    name: "Documentación", exact: true, to: '/documentacion', iconClassName: doc, iconClassNameWhite: docwhite,
   },
   {
-    name: "Actividad", exact: true, to: '/actividad', iconClassName: 'bi bi-speedometer2'
+    name: "Actividad", exact: true, to: '/actividad', iconClassName: actividad, iconClassNameWhite: actividadwhite,
   },
   /*{
     name: "Facturación", exact: true, to: '/', iconClassName: 'bi bi-speedometer2'
   },*/
   {
-    name: "Usuarios", exact: true, to: '/usuario', iconClassName: 'bi bi-speedometer2'
+    name: "Usuarios", exact: true, to: '/usuario', iconClassName: user, iconClassNameWhite: userwhite,
   }
 ]
 
 const SideMenu = (props) => {
   const [inactive, setInative] = useState(false);
+  
 
   useEffect(() => {
     props.onCollapse(inactive);
   }, [inactive]);
 
+
+
   return (
-    <div className={`side-menu ${inactive ? "inactive" : ""}`}>
+    <div className={`d-none d-sm-block side-menu ${inactive ? "inactive" : ""}`}>
       <div className="top-section">
         <div className="logo">
           <img className="logo-css" src={logo} alt="certiblock" />
@@ -47,6 +57,24 @@ const SideMenu = (props) => {
       <div className={`main-menu ${inactive ? "inactive" : ""}`}>
         <ul>
           {
+            menuItems.map(item => (
+              <li className="padding-li" onClick={props.onClick}>
+                <NavLink
+                  exact
+                  to={item.to}
+                  className={`menu-item`}
+                >
+
+                    <div className="menu-icon">
+                      <img className="share-icon2" src={item.iconClassNameWhite} alt="share" />
+                    </div>
+
+                  <span>{item.name}</span>
+                </NavLink>
+              </li>
+            ))
+          }
+          {/*
             menuItems.map((menuItem, index) => (
               <MenuItem
                 key={index}
@@ -61,7 +89,7 @@ const SideMenu = (props) => {
                 }}
               />
             ))
-          }
+              */}
           {/*<li>
             <a className="menu-item">
               <div className="menu-icon">

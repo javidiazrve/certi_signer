@@ -7,15 +7,16 @@
 .navTitle{
     color: #212529 !important;
     font-weight: 600;
+    margin-bottom: 0;
 }
 .nav-css{
     position: relative;
     margin-top: 0%;
-    margin-left: 30pt;
+    padding-left: 12pt;
 }
 
 .nav-icon{
-    width: 20.66px;
+    width: 25.66px;
 }
 .nav-button{
     border:0px !important;
