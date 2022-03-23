@@ -289,9 +289,8 @@ body {
   margin-left: 288px;
   transition: margin-left 0.2s ease-in;
   /*padding-left: 50px;*/
-  /*padding-right: 50px;*/
+  padding-right: 20px;
   box-sizing: border-box;
-  padding-right: 0px !important;
   max-width: -webkit-fill-available;
 }
 
