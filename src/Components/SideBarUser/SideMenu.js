@@ -37,7 +37,7 @@ const SideMenu = (props) => {
 
 
   return (
-    <div className={`side-menu ${inactive ? "inactive" : ""}`}>
+    <div className={`d-none d-sm-block side-menu ${inactive ? "inactive" : ""}`}>
       <div className="top-section">
         <div className="logo">
           <img className="logo-css" src={logo} alt="certiblock" />

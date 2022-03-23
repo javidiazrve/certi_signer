@@ -30,7 +30,7 @@ function App() {
   return <div className="App">
     <Router>
 
-      {window.location.pathname === "/documentacion" || window.location.pathname === "/actividad" || window.location.pathname === "/usuario" ? (
+      {window.location.pathname === "/" || window.location.pathname === "/documentacion" || window.location.pathname === "/actividad" || window.location.pathname === "/usuario" ? (
         <SideMenu onCollapse={(inactive) => {
           console.log(inactive);
           setInative(inactive);

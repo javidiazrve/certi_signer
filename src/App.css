@@ -286,11 +286,12 @@ body {
 }
 
 .container {
-  margin-left: 300px;
+  margin-left: 288px;
   transition: margin-left 0.2s ease-in;
-  padding-left: 50px;
+  /*padding-left: 50px;*/
   /*padding-right: 50px;*/
   box-sizing: border-box;
+  padding-right: 0px !important;
 }
 
 .containerTwo {

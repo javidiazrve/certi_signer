@@ -158,9 +158,9 @@ export default function Usuario() {
 
                         <div className="container-user">
                             <div className="avatar">
-                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={bell} alt="bell" />
-                            </button>
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                    <img className="nav-icon" src={bell} alt="bell" />
+                                </button>
                             </div>
                             <div className="user-info-nav">
                                 <p className="name-user">Marta Dieguez</p>
@@ -170,9 +170,10 @@ export default function Usuario() {
                     </Navbar.Collapse>
                 </Navbar>
                 <div className="table-responsive">
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns} scroll={{ x: 'max-content' }} dataSource={dataSource} />
+                    <Button className="uploadUser" style={{marginLeft: "20px"}}>Crear nuevo usuario <img src={circleupload} alt="circleupload" /></Button>
+
                 </div>
-                <Button className="uploadUser">Crear nuevo usuario <img  src={circleupload} alt="circleupload" /></Button>
             </Container>
         </>
     );

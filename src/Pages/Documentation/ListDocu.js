@@ -29,7 +29,6 @@ import './Modal.css'
 
 // Css
 import "./ListDocu.css"
-import { render } from '@testing-library/react';
 
 const columns = [
     {
@@ -84,8 +83,7 @@ const columns = [
     {
         title: 'Documento',
         dataIndex: 'documento',
-        key: 'documento'
-
+        key: 'documento',
     },
     {
         title: '',
@@ -95,7 +93,7 @@ const columns = [
     {
         title: '',
         dataIndex: 'acessdoc',
-        key: 'acessdoc'
+        key: 'acessdoc',
     },
     {
         title: 'Fecha',
@@ -1050,10 +1048,11 @@ class ListDocu extends Component {
 
                         </Row>
 
-                        <Table className="table table-fixed" columns={columns} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
+                        <Table className="table table-fixed" columns={columns} scroll={{ x: 'max-content' }} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
+                        <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img src={circleupload} alt="circleupload" />
+                        </Button>
                     </div>
-                    <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img  src={circleupload} alt="circleupload" />
-                    </Button>
+
                     <Modal show={modal} size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered>
@@ -1243,7 +1242,7 @@ class ListDocu extends Component {
                                             </Col>
 
                                             <Col lg="8">
-                                                <label htmlFor="files" className="uploadButtonModal btn" style={{width: "350px"}}>Seleccionar el documento a cargar <img  src={circleupload} alt="circleupload" /></label>
+                                                <label htmlFor="files" className="uploadButtonModal btn" style={{ width: "350px" }}>Seleccionar el documento a cargar <img src={circleupload} alt="circleupload" /></label>
                                                 <input id="files" style={{ visibility: "hidden" }} type="file" onChange={this.onFileChange} />
                                             </Col>
                                             <span className="text-validate" style={{ textAlign: "center" }}>{this.state.documentError}</span>
