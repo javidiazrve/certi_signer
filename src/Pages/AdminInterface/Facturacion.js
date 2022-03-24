@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
 import circleupload from "../../assets/circleupload.svg";
+import moment from 'moment'
 
 
 import bell from "../../assets/bell.svg";
@@ -15,7 +16,7 @@ const data = [
     {
         key: '1',
         cliente: "Asesoría integral SL",
-        fecha: '02/01/2022 13:43',
+        fecha: '02/01/2022',
         mensualidad: '200 €',
         consumon: "18",
         consumo: "180 €",
@@ -26,7 +27,7 @@ const data = [
     {
         key: '2',
         cliente: "ASANA Certificador Industrial SA",
-        fecha: '15/01/2022 15:19',
+        fecha: '15/01/2022',
         mensualidad: '200 €',
         consumon: "12",
         consumo: "225 €",
@@ -36,7 +37,7 @@ const data = [
     },
     {
         key: '3',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "Asesoría integral SL",
         mensualidad: '200 €',
         consumon: "25",
@@ -47,7 +48,7 @@ const data = [
     },
     {
         key: '4',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         mensualidad: '200 €',
         consumon: "26",
@@ -58,7 +59,7 @@ const data = [
     },
     {
         key: '5',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "Asesoría integral SL",
         mensualidad: '200 €',
         consumon: "21",
@@ -69,7 +70,7 @@ const data = [
     },
     {
         key: '6',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         mensualidad: '200 €',
         consumon: "22",
@@ -157,18 +158,23 @@ export default function ActividadAdmin() {
 
     }
 
-    const handleClient = (e) => {
+
+    const handleFilterDate = (e) => {
         const currValue = e.target.value;
-        if (currValue === "Todos los clientes") {
+
+        let today = moment(moment(currValue)).format('DD/MM/YYYY');
+
+        console.log("today?", today);
+        if (today === "Invalid date") {
             console.log("Sera que si?");
-            return setDataSource(data);
+            return setDataSource(data)
         } else {
             const filteredData = data.filter(entry =>
-                entry.cliente.includes(currValue)
+                entry.fecha.includes(today)
             );
             setDataSource(filteredData);
+            //this.setState({ baseData: filteredData })
         }
-
     }
 
 
@@ -249,9 +255,8 @@ export default function ActividadAdmin() {
                                 <p className="title-filter">Fecha</p>
 
                                 <Form.Group controlId="dob">
-                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    <Form.Control onChange={handleFilterDate} className="select-css" type="date" name="dob" placeholder="Date of Birth" />
                                 </Form.Group>
-
                             </div>
                         </Col>
 

@@ -6,6 +6,8 @@ import { faListCheck, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form, Button, Navbar, Nav, Modal, Label } from 'react-bootstrap';
 import ChipInput from 'material-ui-chip-input';
 import axios from "axios";
+import moment from 'moment'
+
 
 
 import '../../Components/Navbar/NavbarHeader.css';
@@ -122,7 +124,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso privado QR con contraseña",
-        fecha: "22-01-2022",
+        fecha: "22/01/2022",
         visto: "15",
     },
     {
@@ -138,7 +140,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={unlock} alt="unlock" />,
         estado: "Acceso público mediante QR",
-        fecha: "15-01-2022",
+        fecha: "15/01/2022",
         visto: "15"
     },
     {
@@ -154,7 +156,7 @@ const data = [
         doctype: <img src={clearimg} alt="clearimg" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso público mediante QR",
-        fecha: "01-12-2022",
+        fecha: "01/12/2022",
         visto: "0"
     },
     {
@@ -170,7 +172,7 @@ const data = [
         doctype: <img src={pdf} alt="pdf" />,
         acessdoc: <img src={lock} alt="lock" />,
         estado: "Acceso público mediante QR",
-        fecha: "13-01-2022",
+        fecha: "13/01/2022",
         visto: "112"
     }
 ];
@@ -895,13 +897,16 @@ class ListDocu extends Component {
 
     handleFilterDate = (e) => {
         const currValue = e.target.value;
-        console.log("Date?", currValue);
-        if (currValue === "Mostrar todo") {
+        
+        let today = moment(moment(currValue)).format('DD/MM/YYYY'); 
+
+        console.log("today?", today);
+        if (today === "Invalid date") {
             console.log("Sera que si?");
             return this.setState({ baseData: data })
         } else {
             const filteredData = data.filter(entry =>
-                entry.fecha.includes(currValue)
+                entry.fecha.includes(today)
             );
             //setDataSource(filteredData);
             this.setState({ baseData: filteredData })

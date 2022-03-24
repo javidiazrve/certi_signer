@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
 import circleupload from "../../assets/circleupload.svg";
+import moment from 'moment'
 
 
 import bell from "../../assets/bell.svg";
@@ -14,7 +15,7 @@ import "../Documentation/ListDocu.css"
 const data = [
     {
         key: '1',
-        fecha: '02/01/2022 13:43',
+        fecha: '02/01/2022',
         cliente: "Asesoría integral SL",
         usuario: 'Pedro Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -24,7 +25,7 @@ const data = [
     },
     {
         key: '2',
-        fecha: '15/01/2022 15:19',
+        fecha: '15/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -34,7 +35,7 @@ const data = [
     },
     {
         key: '3',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "Asesoría integral SL",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -44,7 +45,7 @@ const data = [
     },
     {
         key: '4',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -54,7 +55,7 @@ const data = [
     },
     {
         key: '5',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "Asesoría integral SL",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -64,7 +65,7 @@ const data = [
     },
     {
         key: '6',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -74,7 +75,7 @@ const data = [
     },
     {
         key: '7',
-        fecha: '10/01/2022 15:19',
+        fecha: '10/01/2022',
         cliente: "Asesoría integral SL",
         usuario: 'Julio Marín',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -152,18 +153,22 @@ export default function Consumo() {
     const [value, setValue] = useState('');
 
 
-    const handleActivy = (e) => {
+    const handleFilterDate = (e) => {
         const currValue = e.target.value;
-        if (currValue === "Mostrar todo") {
+
+        let today = moment(moment(currValue)).format('DD/MM/YYYY');
+
+        console.log("today?", today);
+        if (today === "Invalid date") {
             console.log("Sera que si?");
-            return setDataSource(data);
+            return setDataSource(data)
         } else {
             const filteredData = data.filter(entry =>
-                entry.actividad.includes(currValue)
+                entry.fecha.includes(today)
             );
             setDataSource(filteredData);
+            //this.setState({ baseData: filteredData })
         }
-
     }
 
     const handleClient = (e) => {
@@ -258,7 +263,7 @@ export default function Consumo() {
                                 <p className="title-filter">Fecha</p>
 
                                 <Form.Group controlId="dob">
-                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    <Form.Control onChange={handleFilterDate} className="select-css" type="date" name="dob" placeholder="Date of Birth" />
                                 </Form.Group>
 
                             </div>
