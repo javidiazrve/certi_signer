@@ -284,3 +284,13 @@
     padding-left: 0;
     background: transparent !important;
 }
+
+/*.custom-ui-main{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+}*/
+
+.custom-ui-chill{
+    text-align: center;
+}
