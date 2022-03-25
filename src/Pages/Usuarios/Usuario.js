@@ -256,18 +256,6 @@ export default function Usuario() {
                     aria-labelledby="contained-modal-title-vcenter"
                     centered style={{ padding: "40px" }}
                     show={isEditing}
-                    onClick={() => {
-                        setDataSource((pre) => {
-                            return pre.map((student) => {
-                                if (student.id === editingUser.id) {
-                                    return editingUser;
-                                } else {
-                                    return student;
-                                }
-                            });
-                        });
-                        resetEditing();
-                    }}
                 >
                     <div className="Content">
                         <form>
