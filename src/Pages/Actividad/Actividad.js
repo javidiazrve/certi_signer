@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Table, Input } from 'antd';
 import { Container, Row, Col, Form, Navbar, Nav } from 'react-bootstrap';
+import moment from 'moment'
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
@@ -11,7 +13,7 @@ import "../Documentation/ListDocu.css"
 const data = [
     {
         key: '1',
-        fecha: '02/01/2022 - 13:43',
+        fecha: '02/01/2022',
         actividad: "Visualización mediante QR público",
         detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -19,7 +21,7 @@ const data = [
     },
     {
         key: '2',
-        fecha: '15/01/2022 - 15:19',
+        fecha: '15/01/2022',
         actividad: "Visualización mediante QR público",
         detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90',
         documento: "Memoria de calidades Expediente: PTR5656",
@@ -27,7 +29,7 @@ const data = [
     },
     {
         key: '3',
-        fecha: '12/01/2022 - 11:09',
+        fecha: '12/01/2022',
         actividad: "Visualización mediante QR público",
         detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
         documento: "Memoria de calidades Expediente: PTR5656",
@@ -35,7 +37,7 @@ const data = [
     },
     {
         key: '4',
-        fecha: '11/01/2022 - 08:09',
+        fecha: '11/01/2022',
         actividad: "Modificación de metadatos asociados",
         detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado',
         documento: "Memoria de calidades Expediente: PTR5656",
@@ -43,7 +45,7 @@ const data = [
     },
     {
         key: '5',
-        fecha: '11/01/2022 - 08:09',
+        fecha: '11/01/2022',
         actividad: "Modificación de metadatos asociados",
         detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR',
         documento: "Memoria de calidades Expediente: PTR5656",
@@ -51,7 +53,7 @@ const data = [
     },
     {
         key: '6',
-        fecha: '11/01/2022 - 08:09',
+        fecha: '11/01/2022',
         actividad: "Nuevo documento creado",
         detalles: 'Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -59,7 +61,7 @@ const data = [
     },
     {
         key: '7',
-        fecha: '10/01/2022 - 15:19',
+        fecha: '10/01/2022',
         actividad: "Documento privado, intento de acceso fallido",
         detalles: 'Acceso mediante dispositivo móvil, IP: 45.123.0.90',
         documento: "Certificado emitido Expediente: PRT87965",
@@ -147,6 +149,24 @@ export default function Actividad() {
 
     }
 
+    const handleFilterDate = (e) => {
+        const currValue = e.target.value;
+
+        let today = moment(moment(currValue)).format('DD/MM/YYYY');
+
+        console.log("today?", today);
+        if (today === "Invalid date") {
+            console.log("Sera que si?");
+            return setDataSource(data)
+        } else {
+            const filteredData = data.filter(entry =>
+                entry.fecha.includes(today)
+            );
+            setDataSource(filteredData);
+            //this.setState({ baseData: filteredData })
+        }
+    }
+
 
     return (
         <>
@@ -179,9 +199,9 @@ export default function Actividad() {
 
                         <div className="container-user">
                             <div className="avatar">
-                            <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
-                                <img className="nav-icon" src={bell} alt="bell" />
-                            </button>
+                                <button className="btn btn-outline-secondary  border-bottom-0 border rounded-pill ms-n5 nav-button" type="button">
+                                    <img className="nav-icon" src={bell} alt="bell" />
+                                </button>
                             </div>
                             <div className="user-info-nav">
                                 <p className="name-user">Marta Dieguez</p>
@@ -224,7 +244,7 @@ export default function Actividad() {
                                 <p className="title-filter">FECHA DE CARGA</p>
 
                                 <Form.Group controlId="dob">
-                                    <Form.Control className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                    <Form.Control onChange={handleFilterDate} className="select-css" type="date" name="dob" placeholder="Date of Birth" />
                                 </Form.Group>
                             </div>
                         </Col>

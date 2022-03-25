@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import '../../Components/Navbar/NavbarHeader.css';
 import circleupload from "../../assets/circleupload.svg";
+import moment from 'moment'
 
 
 import bell from "../../assets/bell.svg";
@@ -14,7 +15,7 @@ import "../Documentation/ListDocu.css"
 const data = [
     {
         key: '1',
-        fecha: '02/01/2022 13:43',
+        fecha: '02/01/2022',
         cliente: "Asesoría integral SL",
         actividad: 'Visualización mediante QR público',
         detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
@@ -24,7 +25,7 @@ const data = [
     },
     {
         key: '2',
-        fecha: '15/01/2022 15:19',
+        fecha: '15/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         actividad: 'Visualización mediante QR público',
         detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90",
@@ -34,7 +35,7 @@ const data = [
     },
     {
         key: '3',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "Asesoría integral SL",
         actividad: 'Visualización mediante QR público',
         detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
@@ -44,7 +45,7 @@ const data = [
     },
     {
         key: '4',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         actividad: 'Modificación de metadatos asociados',
         detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso bloqueado",
@@ -54,7 +55,7 @@ const data = [
     },
     {
         key: '5',
-        fecha: '11/01/2022 08:09',
+        fecha: '11/01/2022',
         cliente: "Asesoría integral SL",
         actividad: 'Modificación de metadatos asociados',
         detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso privado mediante QR",
@@ -64,7 +65,7 @@ const data = [
     },
     {
         key: '6',
-        fecha: '12/01/2022 11:09',
+        fecha: '12/01/2022',
         cliente: "ASANA Certificador Industrial SA",
         actividad: 'Nuevo documento creado',
         detalle: "Acceso mediante ordenador personal, IP: 45.123.0.90 Visibilidad definida: Acceso público mediante QR",
@@ -74,7 +75,7 @@ const data = [
     },
     {
         key: '7',
-        fecha: '10/01/2022 15:19',
+        fecha: '10/01/2022',
         cliente: "Asesoría integral SL",
         actividad: 'Documento privado, intento de acceso fallido',
         detalle: "Acceso mediante dispositivo móvil, IP: 45.123.0.90",
@@ -173,18 +174,23 @@ export default function ActividadAdmin() {
 
     }
 
-    const handleClient = (e) => {
+
+    const handleFilterDate = (e) => {
         const currValue = e.target.value;
-        if (currValue === "Todos los clientes") {
+
+        let today = moment(moment(currValue)).format('DD/MM/YYYY');
+
+        console.log("today?", today);
+        if (today === "Invalid date") {
             console.log("Sera que si?");
-            return setDataSource(data);
+            return setDataSource(data)
         } else {
             const filteredData = data.filter(entry =>
-                entry.cliente.includes(currValue)
+                entry.fecha.includes(today)
             );
             setDataSource(filteredData);
+            //this.setState({ baseData: filteredData })
         }
-
     }
 
 
@@ -264,15 +270,15 @@ export default function ActividadAdmin() {
                             <div className="SelectBusqueda">
                                 <p className="title-filter">Fecha</p>
 
-                                    <Form.Group controlId="dob">
-                                        <Form.Control  className="select-css" type="date" name="dob" placeholder="Date of Birth" />
-                                    </Form.Group>
+                                <Form.Group controlId="dob">
+                                    <Form.Control onChange={handleFilterDate} className="select-css" type="date" name="dob" placeholder="Date of Birth" />
+                                </Form.Group>
 
                             </div>
                         </Col>
 
                     </Row>
-                    <Table columns={columns}  dataSource={dataSource} />
+                    <Table columns={columns} dataSource={dataSource} />
                 </div>
                 <Button className="uploadUser">Exportar resultados <img src={circleupload} alt="circleupload" /></Button>
 
