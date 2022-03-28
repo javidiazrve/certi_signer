@@ -174,7 +174,7 @@ const data = [
         estado: "Acceso público mediante QR",
         fecha: "13/01/2022",
         visto: "112"
-    }
+    },
 ];
 
 const categoriasArr = [
@@ -1053,7 +1053,7 @@ class ListDocu extends Component {
 
                         </Row>
 
-                        <Table className="table table-fixed" columns={columns} scroll={{ x: 'max-content' }} pagination={{ alignment: 'left' | 'center' | 'right' }} dataSource={filterTable == null ? baseData : filterTable} />
+                        <Table className="table table-fixed" columns={columns} scroll={{ x: 'max-content' }} pagination={{ pageSize: 6}} dataSource={filterTable == null ? baseData : filterTable} />
                         <Button className="uploadButton" style={{ marginLeft: "17px" }} onClick={this.modalOpen}>Cargar nuevo documento <img src={circleupload} alt="circleupload" />
                         </Button>
                     </div>

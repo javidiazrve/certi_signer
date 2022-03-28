@@ -14,4 +14,14 @@
 .login-button {
     background: #ff0b0b;
     border-radius: 24px;
+    width: 200px;
+    color: white;
+    height: 42px;
+    border-color: red;
 }
+
+.content-form{
+    margin-top: 10%
+}
+
+

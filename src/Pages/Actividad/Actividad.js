@@ -250,7 +250,7 @@ export default function Actividad() {
                         </Col>
 
                     </Row>
-                    <Table columns={columns} dataSource={dataSource} />
+                    <Table columns={columns} pagination={{ pageSize: 6}} dataSource={dataSource} />
                 </div>
             </Container>
         </>
