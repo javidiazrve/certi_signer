@@ -271,25 +271,13 @@ export default function Clientes() {
                 <Col lg="6">
                   <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label className="title-filter-modal">Nombre de usuario</Form.Label>
-                    <Form.Select className="select-css-clientes" aria-label="Default select example">
-                      {
-                        user.map(user => (
-                          <option key={user.id} value={user.name} >{user.name}</option>
-                        ))
-                      }
-                    </Form.Select>
+                    <Form.Control className="input-Form newCategory-css" type="text" placeholder="" />
                   </Form.Group>
                 </Col>
                 <Col lg="6">
                   <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label className="title-filter-modal">Clave de acceso</Form.Label>
-                    <Form.Select className="select-css-clientes" aria-label="Default select example">
-                      {
-                        user.map(user => (
-                          <option key={user.id} value={user.name} >{user.name}</option>
-                        ))
-                      }
-                    </Form.Select>
+                    <Form.Control className="input-Form newCategory-css" type="password" placeholder="" />
                   </Form.Group>
                 </Col>
               </Row>

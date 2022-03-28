@@ -1,10 +1,10 @@
 .ant-input {
-    background: #e3e3e3;
+    background: transparent;
     border-radius: 82px;
     padding: 10px;
     padding-left: 20px;
     margin-left: 50px;
-    border: 0px;
+    border: 1px solid #102973;
     width: 300px;
 }
 .table-responsive {
@@ -181,12 +181,12 @@
     height: 5px !important;
     padding-bottom: 20px !important;
     padding-left: 10px;
-    text-align: center;
+    text-align: start;
 }
 .ant-table-thead > tr > th {
     height: 5px !important;
     padding: 20px !important;
-    text-align: center;
+    text-align: start;
 }
 .ant-pagination {
     display: flex !important;
@@ -228,9 +228,9 @@
 
 .ant-pagination-item {
     padding: 10px !important;
-    color: white !important;
+    color: #102973 !important;
     border-radius: 61px !important;
-    background: rgba(16, 41, 115, 0.15) !important;
+    /*background: rgba(16, 41, 115, 0.15) !important;*/
     padding-left: 32px !important;
     padding-right: 27px !important;
     border-radius: 61px !important;
@@ -251,6 +251,7 @@
 }
 .ant-pagination-item-active a {
     width: 68px !important;
+    background: rgba(16, 41, 115, 0.15) !important;
     height: 61.18px !important;
     padding-top: 10px !important;
     padding-bottom: 13px !important;

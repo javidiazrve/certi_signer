@@ -247,7 +247,7 @@ export default function Usuario() {
                     </Navbar.Collapse>
                 </Navbar>
                 <div className="table-responsive">
-                    <Table columns={columns} scroll={{ x: 'max-content' }} dataSource={dataSource} />
+                    <Table columns={columns} scroll={{ x: 'max-content' }} pagination={{ pageSize: 6}} dataSource={dataSource} />
                     <Button className="uploadUser" style={{ marginLeft: "20px" }} onClick={handleModal}>Crear nuevo usuario <img src={circleupload} alt="circleupload" /></Button>
 
                 </div>
